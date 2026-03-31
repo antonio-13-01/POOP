@@ -11,4 +11,4 @@ se poate lucra pe mai multe branchuri separate in caz ca nu merg cand le combina
 
 la fiecare fisier sunt 3 categorii preview code si blame , la blame se pot observa schimbarile facute in fisierul respectiv
 
-
+vezi README2.md
