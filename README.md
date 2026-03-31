@@ -9,3 +9,4 @@ pentru stergere intrati dati pe cele 3 puncte si delete
 
 se poate lucra pe mai multe branchuri separate in caz ca nu merg cand le combinam si putem sa facem branchuri unde apare main si sa punem separat ce a facut fiecare inainte sa le combinam 
 
+la fiecare fisier sunt 3 categorii 
