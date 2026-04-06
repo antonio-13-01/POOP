@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="RailBook/RailBook.vcxproj" />
+  <Project Path="RailBook/RailBook.vcxproj" Id="549887f8-0aea-48bf-8176-34c8dbdc7cd7" />
 </Solution>
