@@ -1,2 +1,0 @@
-﻿RailBookApp.obj : error LNK2001: unresolved external symbol "private: static class DatabaseManager & RailBookApp::_dbManager" (?_dbManager@RailBookApp@@0AEAVDatabaseManager@@EA)
-C:\Users\Ana\Desktop\POOP\RailBook\x64\Debug\RailBook.exe : fatal error LNK1120: 1 unresolved externals

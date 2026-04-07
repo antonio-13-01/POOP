@@ -54,10 +54,14 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="IUtilizator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AUtilizator.cpp">
+=======
+    <ClCompile Include="nanodbc.cpp">
+>>>>>>> Stashed changes
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,10 +102,14 @@
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="IUtilizator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AUtilizator.h">
+=======
+    <ClInclude Include="nanodbc.h">
+>>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
