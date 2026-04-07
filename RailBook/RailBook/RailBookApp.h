@@ -10,11 +10,9 @@
 class RailBookApp
 {
 private:
-	static DatabaseManager& _dbManager;
 	std::vector<ITrain*> _trains;
 	std::vector<Route*> _routes;
-	static Logger& _logger;
-
+	
 public:
 	static RailBookApp& getInstance();
 

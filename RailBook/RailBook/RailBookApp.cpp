@@ -8,13 +8,17 @@ RailBookApp& RailBookApp::getInstance()
 
 DatabaseManager& RailBookApp::getDatabaseManager()
 {
-	return _dbManager;	
+	auto& dbManager = DatabaseManager::getInstance();
+	return dbManager;
 }
 
-inline Logger& RailBookApp::getLogger()
+Logger& RailBookApp::getLogger()
 {
-	return _logger; 
+	auto& logger = Logger::getInstance();	
+	return logger;
 }
+
+
 
 std::vector<ITrain*> RailBookApp::getTrains() const
 {
