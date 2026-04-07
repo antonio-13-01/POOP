@@ -127,7 +127,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RailBook.cpp" />
+    <ClCompile Include="ATrain.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
+    <ClCompile Include="InterCity.cpp" />
+    <ClCompile Include="InterRegio.cpp" />
+    <ClCompile Include="ITrain.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RailBookApp.cpp" />
+    <ClCompile Include="Regio.cpp" />
+    <ClCompile Include="Route.cpp" />
+    <ClCompile Include="Station.cpp" />
+    <ClCompile Include="StopInfo.cpp" />
+    <ClCompile Include="Wagon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ATrain.h" />
+    <ClInclude Include="DatabaseManager.h" />
+    <ClInclude Include="InterCity.h" />
+    <ClInclude Include="InterRegio.h" />
+    <ClInclude Include="ITrain.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="RailBookApp.h" />
+    <ClInclude Include="Regio.h" />
+    <ClInclude Include="Route.h" />
+    <ClInclude Include="Station.h" />
+    <ClInclude Include="StopInfo.h" />
+    <ClInclude Include="Wagon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
