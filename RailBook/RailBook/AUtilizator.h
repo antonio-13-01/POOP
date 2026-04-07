@@ -18,6 +18,5 @@ public:
 	std::string getEmail() const override;
 	std::string getParolaHash() const override;
 	UserType getUserType() const override;
-
 };
 

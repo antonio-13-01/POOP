@@ -60,6 +60,15 @@
     <ClCompile Include="AUtilizator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Operator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Admin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ITrain.h">
@@ -102,6 +111,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AUtilizator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Admin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
