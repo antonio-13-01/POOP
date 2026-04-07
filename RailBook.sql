@@ -96,33 +96,82 @@ ADD CONSTRAINT PK_Seat PRIMARY KEY (seat_id)
 ALTER TABLE Seat
 ADD CONSTRAINT FK_SeatWagon FOREIGN KEY (wagon_id) REFERENCES Wagon(wagon_id)
 
+-- ==================DISCOUNT===================
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Discount' AND xtype='U')
+CREATE TABLE Discount (
+    discount_id         INT                 IDENTITY(1,1)      NOT NULL,
+    discount_type        VARCHAR(20)         NOT NULL           DEFAULT  'Adult Standard', --Elev, Student, Senior
+    discount_percent    DECIMAL(10,2)       NOT NULL
+)
+ 
+ALTER TABLE Discount
+ADD CONSTRAINT PK_Discount PRIMARY KEY (discount_id)
+ 
+
 -- ==================USER===================
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='User' AND xtype='U')
-CREATE TABLE [User] (
-    [user_id]         INT             IDENTITY(1,1) NOT NULL,
-    user_last_name    VARCHAR(100)    NOT NULL,
-    user_first_name   VARCHAR(100)    NOT NULL,
-    user_email        VARCHAR(255)    NOT NULL,
-    user_password     VARCHAR(255)    NOT NULL,
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Users' AND xtype='U')
+CREATE TABLE Users (
+    users_id         INT             IDENTITY(1,1) NOT NULL,
+    users_last_name    VARCHAR(100)    NOT NULL,
+    users_first_name   VARCHAR(100)    NOT NULL,
+    users_email        VARCHAR(255)    NOT NULL,
+    users_password     VARCHAR(255)    NOT NULL,
     
     -- Rolul în sistem - administrator, operator, client
-    user_role         VARCHAR(20)     NOT NULL DEFAULT 'Client',
+    users_role         VARCHAR(20)     NOT NULL DEFAULT 'Client',
    
     -- Client
     client_category   VARCHAR(20)     NULL, --adult standard, elev, student, pensionar
     client_credit     DECIMAL(10,2)   DEFAULT 0.00
 );
 
-ALTER TABLE [User]
-ADD CONSTRAINT PK_User PRIMARY KEY ([user_id]);
+ALTER TABLE Users
+ADD CONSTRAINT PK_Users PRIMARY KEY (users_id);
 
-ALTER TABLE [User]
-ADD CONSTRAINT UQ_UserEmail UNIQUE (user_email);
+ALTER TABLE Users
+ADD CONSTRAINT UQ_UsersEmail UNIQUE (users_email);
 
--- ==================JOURNEY===================
+ALTER TABLE Users
+ADD valability_date   DATE      NOT NULL
 
+ALTER TABLE Users
+ALTER COLUMN valability_date DATE NULL;
 
+ALTER TABLE Users
+ADD discount_id       INT       NULL
 
+ALTER TABLE Users
+ADD CONSTRAINT FK_UsersDiscount FOREIGN KEY (discount_id) REFERENCES Discount(discount_id);
+
+-- ==================TICKET===================
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Ticket' AND xtype='U')
+CREATE TABLE Ticket (
+    ticket_id               INT          IDENTITY(1,1)      NOT NULL,
+    users_id               INT          NOT NULL,
+    seat_id                 INT          NOT NULL,
+    begin_stop_info_id      INT          NOT NULL,  -- statie imbarcare
+    end_stop_info_id        INT          NOT NULL,  -- statie destinatie
+    fare                    NUMERIC(8,2) NOT NULL,
+    ticket_status           VARCHAR(20)  NOT NULL           DEFAULT 'Activ', -- Activ, Anulat, Finalizat
+    journey_date            DATE         NOT NULL,
+)
+ 
+ALTER TABLE Ticket
+ADD CONSTRAINT PK_Ticket PRIMARY KEY (ticket_id)
+ 
+ALTER TABLE Ticket
+ADD CONSTRAINT FK_TicketUser FOREIGN KEY (users_id) REFERENCES Users(users_id)
+ 
+ALTER TABLE Ticket
+ADD CONSTRAINT FK_TicketSeat FOREIGN KEY (seat_id) REFERENCES Seat(seat_id)
+ 
+ALTER TABLE Ticket
+ADD CONSTRAINT FK_TicketBeginStopInfo FOREIGN KEY (begin_stop_info_id) REFERENCES StopInfo(stop_info_id)
+ 
+ALTER TABLE Ticket
+ADD CONSTRAINT FK_TicketEndStopInfo FOREIGN KEY (end_stop_info_id) REFERENCES StopInfo(stop_info_id)
 
  
