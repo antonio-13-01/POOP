@@ -130,8 +130,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Admin.cpp" />
     <ClCompile Include="ATrain.cpp" />
     <ClCompile Include="AUtilizator.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="InterCity.cpp" />
     <ClCompile Include="InterRegio.cpp" />
@@ -139,6 +141,7 @@
     <ClCompile Include="IUtilizator.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operator.cpp" />
     <ClCompile Include="nanodbc.cpp" />
     <ClCompile Include="RailBookApp.cpp" />
     <ClCompile Include="Regio.cpp" />
@@ -148,14 +151,17 @@
     <ClCompile Include="Wagon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="ATrain.h" />
     <ClInclude Include="AUtilizator.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="InterCity.h" />
     <ClInclude Include="InterRegio.h" />
     <ClInclude Include="ITrain.h" />
     <ClInclude Include="IUtilizator.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="Operator.h" />
     <ClInclude Include="nanodbc.h" />
     <ClInclude Include="RailBookApp.h" />
     <ClInclude Include="Regio.h" />

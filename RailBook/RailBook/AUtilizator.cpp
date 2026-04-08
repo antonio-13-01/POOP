@@ -1,6 +1,7 @@
 #include "AUtilizator.h"
 
 AUtilizator::AUtilizator(int id, const std::string& nume, const std::string& prenume, const std::string& email, const std::string& parolaHash, UserType userType)
+	: _id(id), _nume(nume), _prenume(prenume), _email(email), _parolaHash(parolaHash), _userType(userType)
 {
 }
 

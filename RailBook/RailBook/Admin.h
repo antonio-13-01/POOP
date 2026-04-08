@@ -1,5 +1,6 @@
 #pragma once
 #include "AUtilizator.h"
+#include "Client.h"
 class Admin :
     public AUtilizator
 {
@@ -9,6 +10,6 @@ public:
     Admin(int id, const std::string& nume, const std::string& prenume, const std::string& email, const std::string& parolaHash, UserType userType, int idAdmin);
     int getIdAdmin() const;
 
-    //de facut functie de verificare id client
+	int checkClientId(Client* client) const;
 };
 
