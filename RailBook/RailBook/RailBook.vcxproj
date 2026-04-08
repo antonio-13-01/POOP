@@ -132,13 +132,13 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="ATrain.cpp" />
-    <ClCompile Include="AUtilizator.cpp" />
+    <ClCompile Include="AUser.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="InterCity.cpp" />
     <ClCompile Include="InterRegio.cpp" />
     <ClCompile Include="ITrain.cpp" />
-    <ClCompile Include="IUtilizator.cpp" />
+    <ClCompile Include="IUser.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Operator.cpp" />
@@ -153,13 +153,13 @@
   <ItemGroup>
     <ClInclude Include="Admin.h" />
     <ClInclude Include="ATrain.h" />
-    <ClInclude Include="AUtilizator.h" />
+    <ClInclude Include="AUser.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="InterCity.h" />
     <ClInclude Include="InterRegio.h" />
     <ClInclude Include="ITrain.h" />
-    <ClInclude Include="IUtilizator.h" />
+    <ClInclude Include="IUser.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="nanodbc.h" />

@@ -1,134 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="ATrain.cpp" />
+    <ClCompile Include="AUser.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
+    <ClCompile Include="InterCity.cpp" />
+    <ClCompile Include="InterRegio.cpp" />
+    <ClCompile Include="ITrain.cpp" />
+    <ClCompile Include="IUser.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="nanodbc.cpp" />
+    <ClCompile Include="RailBookApp.cpp" />
+    <ClCompile Include="Regio.cpp" />
+    <ClCompile Include="Route.cpp" />
+    <ClCompile Include="Station.cpp" />
+    <ClCompile Include="StopInfo.cpp" />
+    <ClCompile Include="Wagon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ITrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RailBookApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ATrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Regio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InterRegio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InterCity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Station.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StopInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Route.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Wagon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< Updated upstream
-    <ClCompile Include="IUtilizator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AUtilizator.cpp">
-=======
-    <ClCompile Include="nanodbc.cpp">
->>>>>>> Stashed changes
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Operator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Admin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ITrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RailBookApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ATrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Regio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InterRegio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InterCity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Station.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StopInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Route.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Wagon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DatabaseManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="IUtilizator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AUtilizator.h">
-=======
-    <ClInclude Include="nanodbc.h">
->>>>>>> Stashed changes
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Operator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Admin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Admin.h" />
+    <ClInclude Include="ATrain.h" />
+    <ClInclude Include="AUser.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="DatabaseManager.h" />
+    <ClInclude Include="InterCity.h" />
+    <ClInclude Include="InterRegio.h" />
+    <ClInclude Include="ITrain.h" />
+    <ClInclude Include="IUser.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Operator.h" />
+    <ClInclude Include="nanodbc.h" />
+    <ClInclude Include="RailBookApp.h" />
+    <ClInclude Include="Regio.h" />
+    <ClInclude Include="Route.h" />
+    <ClInclude Include="Station.h" />
+    <ClInclude Include="StopInfo.h" />
+    <ClInclude Include="Wagon.h" />
   </ItemGroup>
 </Project>
