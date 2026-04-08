@@ -9,16 +9,13 @@ int main() {
         nanodbc::connection conn(connection_string);
 
         if (conn.connected()) {
-            std::cout << "========================================" << std::endl;
-            std::cout << "   CONEXIUNE REUSITA LA RAILBOOK!      " << std::endl;
-            std::cout << "========================================" << std::endl;
+            std::cout << "conexiune" << std::endl;
+            
         }
     }
     catch (const std::exception& e) {
-        std::cout << "EROARE DE CONEXIUNE: " << e.what() << std::endl;
+        std::cout << "eroare conexiune" << e.what() << std::endl;
     }
 
-    std::cout << "\nApasa orice tasta pentru a iesi...";
-    std::cin.get();
     return 0;
 }
