@@ -1,18 +1,17 @@
 #include "Client.h"
 
-Client::Client(int id, const std::string& nume, const std::string& prenume, const std::string& email, const std::string& parolaHash, UserType userType, ClientType clientType, std::string idClient, float soldCredit, std::string valabilitate)
-	: AUtilizator(id, nume, prenume, email, parolaHash, userType)
-	,_clientType(clientType), _idClient(idClient), _soldCredit(soldCredit), _valabilitate(valabilitate)
+Client::Client(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& parolaHash, UserType userType, float credit, std::string valability, std::string idDiscount)
+	:AUser(id, last_name, name, email, parolaHash, userType), _credit(credit), _valability(valability), _idDiscount(idDiscount)
 {
+	_idDiscount = idDiscount;	
 }
 
-std::string Client::getIdClient() const
+std::string Client::getIdDiscount() const
 {
-	return _idClient;
+	return _idDiscount;
 }
 
 Client::ClientType Client::getClientType() const
 {
-	return _clientType;
+	return _type;
 }
-

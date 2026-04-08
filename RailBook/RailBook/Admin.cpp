@@ -1,21 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Admin.h"
 #include <string>
-Admin::Admin(int id, const std::string& nume, const std::string& prenume, const std::string& email, const std::string& parolaHash, UserType userType, int idAdmin) : AUtilizator(id, nume, prenume, email, parolaHash, userType), _idAdmin(id)
-{
-}
 
-int Admin::getIdAdmin() const
-{
-    return _idAdmin;
-}
+
+Admin::Admin(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& parolaHash, UserType userType)
+	:AUser(id, last_name, name, email, parolaHash, userType)    { }
+
 
 int Admin::checkClientId(Client* client) const
 {
     if (client == nullptr) 
         return 0;
 
-    std::string id = client->getIdClient();
+    std::string id = client->getIdDiscount();
 
     if (id.length() < 11)
         return 0;

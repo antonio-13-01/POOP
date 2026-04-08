@@ -1,13 +1,13 @@
 #pragma once
-#include "AUtilizator.h"
+#include "AUser.h"
 #include "Client.h"
 class Admin :
-    public AUtilizator
+    public AUser
 {
 private:
-    int _idAdmin;
+
 public:
-    Admin(int id, const std::string& nume, const std::string& prenume, const std::string& email, const std::string& parolaHash, UserType userType, int idAdmin);
+    Admin(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& parolaHash, UserType userType);
     int getIdAdmin() const;
 
 	int checkClientId(Client* client) const;
