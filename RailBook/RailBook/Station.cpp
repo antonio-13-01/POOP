@@ -1,7 +1,7 @@
 #include "Station.h"
 
-Station::Station(int id, const std::string& city, const std::string& county)
-	: _id(id), _city(city), _county(county)
+Station::Station(int id, const std::string& name, const std::string& city, const std::string& county)
+	: _id(id), _name(name), _city(city), _county(county)
 {
 }
 

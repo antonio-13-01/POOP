@@ -21,6 +21,9 @@ ADD station_city VARCHAR(100) NOT NULL;
 ALTER TABLE Station
 ADD station_county VARCHAR(100) NOT NULL;
 
+ALTER TABLE Station
+ADD station_name VARCHAR(100) NOT NULL;
+
 -- ==================ROUTE===================
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Route' AND xtype='U')
@@ -31,6 +34,9 @@ CREATE TABLE Route (
  
 ALTER TABLE Route
 ADD CONSTRAINT PK_Route PRIMARY KEY (route_id)
+
+ALTER TABLE Route
+ADD route_direction BIT DEFAULT 0 
 
 -- ==================STOP_INFO===================
 
