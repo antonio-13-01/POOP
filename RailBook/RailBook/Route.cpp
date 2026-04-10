@@ -1,9 +1,10 @@
 #include "Route.h"
 
-Route::Route(int id, const std::string& name)
+Route::Route(int id, const std::string& name, int direction)
 {
 	_id = id;
 	_name = name;
+	_direction = direction;
 }
 
 int Route::getId() const
