@@ -73,9 +73,9 @@ INSERT INTO Station (station_name, station_city,station_county) VALUES
 ('Petrosani', 'Petrosani', 'Hunedoara'),
 ('Hunedoara', 'Hunedoara', 'Hunedoara'),
 ('Orastie', 'Orastie', 'Hunedoara'),
-('Slobozia Veche', 'Slobozia', 'Ialomița'),
-('Fetesti', 'Fetesti', 'Ialomița'),
-('Urziceni', 'Urziceni', 'Ialomița'),
+('Slobozia Veche', 'Slobozia', 'Ialomita'),
+('Fetesti', 'Fetesti', 'Ialomita'),
+('Urziceni', 'Urziceni', 'Ialomita'),
 ('Iasi', 'Iasi', 'Iasi'),
 ('Pascani', 'Pascani', 'Iasi'),
 ('Targu Frumos', 'Targu Frumos', 'Iasi'),
@@ -87,7 +87,7 @@ INSERT INTO Station (station_name, station_city,station_county) VALUES
 ('Orsova', 'Orsova', 'Mehedinti'),
 ('Targu Mures', 'Targu Mures', 'Mures'),
 ('Sighisoara', 'Sighisoara', 'Mures'),
-('Luduș', 'Luduș', 'Mures'),
+('Ludus', 'Ludus', 'Mures'),
 ('Piatra Neamt', 'Piatra Neamt', 'Neamt'),
 ('Roman', 'Roman', 'Neamt'),
 ('Targu Neamt', 'Targu Neamt', 'Neamt'),
@@ -124,4 +124,15 @@ INSERT INTO Station (station_name, station_city,station_county) VALUES
 ('Ramnicu Valcea', 'Ramnicu Valcea', 'Valcea'),
 ('Dragashani', 'Dragashani', 'Valcea'),
 ('Focsani', 'Focsani', 'Vrancea'),
-('Marasesti', 'Marasesti', 'Vrancea');
+('Marasesti', 'Marasesti', 'Vrancea'),
+('Resita Nord', 'Resita', 'Caras-Severin'),
+('Veresti', 'Veresti', 'Suceava'),
+('Salonta', 'Salonta', 'Bihor');
+
+INSERT INTO Station (station_name, station_city, station_county) VALUES 
+('Strehaia', 'Strehaia', 'Mehedinti'),      
+('Bals', 'Bals', 'Olt');                 
+
+
+SELECT station_id, station_name, station_city, station_county
+FROM Station
