@@ -75,6 +75,19 @@ ADD CONSTRAINT PK_Train PRIMARY KEY (train_id)
 ALTER TABLE Train
 ADD CONSTRAINT FK_TrainRoute FOREIGN KEY (route_id) REFERENCES Route(route_id)
 
+ALTER TABLE Train 
+ADD price_multiplier DECIMAL(3,2) NOT NULL DEFAULT 1.00;
+
+ALTER TABLE Train 
+DROP CONSTRAINT DF__Train__fare__52593CB8;
+
+ALTER TABLE Train 
+DROP COLUMN fare;
+
+ALTER TABLE Train 
+ADD CONSTRAINT FK_Train_TrainPricing 
+FOREIGN KEY (train_type) REFERENCES TrainPricing(train_type);
+
 -- ==================WAGON===================
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Wagon' AND xtype='U')
@@ -185,5 +198,13 @@ ADD CONSTRAINT FK_TicketBeginStopInfo FOREIGN KEY (begin_stop_info_id) REFERENCE
  
 ALTER TABLE Ticket
 ADD CONSTRAINT FK_TicketEndStopInfo FOREIGN KEY (end_stop_info_id) REFERENCES StopInfo(stop_info_id)
+
+-- ==================TRAIN_PRICING===================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TrainPricing' AND xtype='U')
+CREATE TABLE TrainPricing (
+    train_type VARCHAR(20) PRIMARY KEY,
+    base_price_per_km DECIMAL(8,2) NOT NULL
+);
+
 
  
