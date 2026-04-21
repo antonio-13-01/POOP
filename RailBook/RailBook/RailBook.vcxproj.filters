@@ -20,6 +20,10 @@
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="StopInfo.cpp" />
     <ClCompile Include="Wagon.cpp" />
+    <ClCompile Include="Adult.cpp" />
+    <ClCompile Include="Pensioner.cpp" />
+    <ClCompile Include="Student.cpp" />
+    <ClCompile Include="Pupil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
@@ -40,5 +44,9 @@
     <ClInclude Include="Station.h" />
     <ClInclude Include="StopInfo.h" />
     <ClInclude Include="Wagon.h" />
+    <ClInclude Include="Adult.h" />
+    <ClInclude Include="Pensioner.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="Pupil.h" />
   </ItemGroup>
 </Project>

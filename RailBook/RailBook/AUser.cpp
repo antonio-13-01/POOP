@@ -1,7 +1,7 @@
 #include "AUser.h"
 
-AUser::AUser(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& password, UserType userType)
-	: _id(id), _last_name(last_name), _name(name), _email(email), _password(password), _userType(userType)
+AUser::AUser(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& password, UserType userType, bool _isBlocked)
+	: _id(id), _last_name(last_name), _name(name), _email(email), _password(password), _userType(userType), _isBlocked(false)
 {
 }
 
@@ -33,5 +33,15 @@ std::string AUser::getPassword() const
 IUser:: UserType AUser::getUserType() const
 {
 	return _userType;
+}
+
+bool AUser::isBlocked() const
+{
+	return _isBlocked;
+}
+
+void AUser::setBlocked(bool blocked)
+{
+	_isBlocked = blocked;
 }
 

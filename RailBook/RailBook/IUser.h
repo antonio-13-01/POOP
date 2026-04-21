@@ -12,5 +12,7 @@ public:
 	virtual std::string getEmail() const = 0;
 	virtual std::string getPassword() const = 0;
 	virtual UserType getUserType() const = 0;
+	virtual bool isBlocked() const = 0;
+	virtual void setBlocked(bool blocked) = 0;
 };
 
