@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="Adult.cpp" />
     <ClCompile Include="ATrain.cpp" />
     <ClCompile Include="AUser.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -143,15 +144,19 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="nanodbc.cpp" />
+    <ClCompile Include="Pensioner.cpp" />
+    <ClCompile Include="Pupil.cpp" />
     <ClCompile Include="RailBookApp.cpp" />
     <ClCompile Include="Regio.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="StopInfo.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="Wagon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Adult.h" />
     <ClInclude Include="ATrain.h" />
     <ClInclude Include="AUser.h" />
     <ClInclude Include="Client.h" />
@@ -163,11 +168,14 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="nanodbc.h" />
+    <ClInclude Include="Pensioner.h" />
+    <ClInclude Include="Pupil.h" />
     <ClInclude Include="RailBookApp.h" />
     <ClInclude Include="Regio.h" />
     <ClInclude Include="Route.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="StopInfo.h" />
+    <ClInclude Include="Student.h" />
     <ClInclude Include="Wagon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -6,12 +6,13 @@
 #include "Logger.h"
 #include "ITrain.h"
 #include "Route.h"
-
+#include "IUser.h"
 class RailBookApp
 {
 private:
 	std::vector<ITrain*> _trains;
 	std::vector<Route*> _routes;
+	std::vector<IUser*>_user;
 	
 public:
 	static RailBookApp& getInstance();
