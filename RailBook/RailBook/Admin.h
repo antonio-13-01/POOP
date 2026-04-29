@@ -8,8 +8,8 @@ class Admin :
 private:
 
 public:
-    Admin(int id, const std::string last_name, const std::string name,
-        const std::string email, const std::string parolaHash,
+    Admin(int id, const std::string last_name,
+        const std::string name, const std::string email, const std::string parolaHash,
         UserType userType, bool isBlocked);
     
     int getIdAdmin() const;

@@ -12,8 +12,10 @@ protected:
 	UserType _userType;
 	bool _isBlocked;
 public:
-	AUser(int id, const std::string last_name, const std::string name, const std::string email,
-		const std::string parolaHash, UserType userType, bool _isBlocked);
+	AUser(int id, const std::string last_name,
+		const std::string name, const std::string email,
+		const std::string parolaHash, UserType userType,
+		bool _isBlocked);
 	
 	int getId() const override;
 	std::string getLastName() const override;

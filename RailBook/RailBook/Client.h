@@ -15,7 +15,8 @@ public:
 	
 	Client(int id, const std::string last_name, const std::string name,
 		const std::string email, const std::string parolaHash,
-		UserType userType, float credit, std:: string valability, bool isBlocked);
+		UserType userType, float credit, std:: string valability,
+		bool isBlocked);
 	
 	int getId() const;
 	std::string getLastName() const;
@@ -24,7 +25,6 @@ public:
 	ClientType getClientType() const;
 	float getCredit() const;
 	std::string getValability() const;
-
 	void setCredit(float credit); //modific creditul din admin
 	void setClientType(ClientType clientType);
 };
