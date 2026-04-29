@@ -1,6 +1,6 @@
 #include "Client.h"
 
-Client::Client(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& parolaHash, UserType userType, float credit, std::string valability, bool isBlocked)
+Client::Client(int id, const std::string last_name, const std::string name, const std::string email, const std::string parolaHash, UserType userType, float credit, std::string valability, bool isBlocked)
 	:AUser(id, last_name, name, email, parolaHash, userType,isBlocked), _credit(credit), _valability(valability)
 {
 }
