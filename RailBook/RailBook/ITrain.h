@@ -22,6 +22,8 @@ public:
 	virtual std::vector<Wagon*> getWagons() const = 0;
 
 	virtual void addWagon(Wagon* wagon) = 0;
+	virtual void displayInfo() const = 0;
+
 	virtual ~ITrain() = default;	
 	
 };

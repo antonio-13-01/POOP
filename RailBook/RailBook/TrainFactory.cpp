@@ -52,6 +52,7 @@ Wagon::WagonType TrainFactory::stringToWagonType(const std::string& typeStr)
 }
 
 ITrain* TrainFactory::LoadTrainFromDB(int id) {
+
     auto& db = DatabaseManager::getInstance();
 
     // 1. Definim variabilele în care vom stoca datele
@@ -141,6 +142,7 @@ void TrainFactory::LoadSeats(int wagon_id, Wagon* wagon) {
 
         Seat* newSeat = new Seat(s_id, s_nr, s_fare, wagon_id);
         wagon->addSeat(newSeat);
+
     }
 }
 
