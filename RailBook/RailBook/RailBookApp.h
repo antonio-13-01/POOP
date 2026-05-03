@@ -30,15 +30,15 @@ public:
 	std::string trainStatusToString(ITrain::TrainStatus status) const;	
 	std::string wagonTypeToString(Wagon::WagonType type) const;
 	void displayTrains() const;
+
 private:
 	RailBookApp() = default;
 	~RailBookApp()
 	{
 		for (ITrain* train : _trains) {
 			delete train;
-
-			_trains.clear();
 		}
+		_trains.clear();
 	}
 	RailBookApp(const RailBookApp&) = delete;
 	RailBookApp& operator=(const RailBookApp&) = delete;	
