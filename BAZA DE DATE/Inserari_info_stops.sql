@@ -909,3 +909,5 @@ INSERT INTO StopInfo (route_id, station_id, km_from_origin, arrival_minutes, dep
 (156, 93, 0, 0, 0), (156, 16, 70, 95, 95),
 (157, 93, 0, 0, 0), (157, 132, 25, 30, 32), (157, 95, 43, 55, 55),
 (158, 95, 0, 0, 0), (158, 132, 18, 23, 25), (158, 93, 43, 55, 55);
+
+SELECT route_id, COUNT(*) FROM StopInfo GROUP BY route_id;

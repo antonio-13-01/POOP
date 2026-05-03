@@ -4,9 +4,11 @@
 #include "Migration.h"
 
 int main() {
+	std::cout << "Pornirea aplicatiei RailBook..." << std::endl;
+
     try {
         // Adaugă MultipleActiveResultSets=True; la finalul string-ului
-        std::string conn_str = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-INU1UOQ\\SQLEXPRESS;DATABASE=RailBook;Trusted_Connection=yes;MultipleActiveResultSets=True;";        
+        std::string conn_str = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-INU1UOQ\\SQLEXPRESS;DATABASE=RailBook;Trusted_Connection=yes;MultipleActiveResultSets=True;MultipleActiveResultSets = True;";
         RailBookApp::getInstance().initialize(conn_str);
 
         auto& app = RailBookApp::getInstance();
@@ -20,7 +22,8 @@ int main() {
         //std::cout << "Migrarea s-a incheiat cu succes!" << std::endl;
 
 
-        RailBookApp::getInstance().displayTrains();
+        //app.displayTrains();
+		app.displayRoutes();
 
     }
     catch (const std::exception& e) {

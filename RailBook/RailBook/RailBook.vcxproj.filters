@@ -29,6 +29,7 @@
     <ClCompile Include="blowfish.cpp" />
     <ClCompile Include="TrainFactory.cpp" />
     <ClCompile Include="Seat.cpp" />
+    <ClCompile Include="RouteFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
@@ -60,5 +61,6 @@
     <ClInclude Include="openbsd.h" />
     <ClInclude Include="TrainFactory.h" />
     <ClInclude Include="Seat.h" />
+    <ClInclude Include="RouteFactory.h" />
   </ItemGroup>
 </Project>
