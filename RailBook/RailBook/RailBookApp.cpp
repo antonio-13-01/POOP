@@ -10,6 +10,13 @@ void RailBookApp::initialize(const std::string& dbConnection_string)
 {
 	getDatabaseManager().connect(dbConnection_string);
 
+	loadStationsFromDB();
+
+	_routes = RouteFactory::LoadAllRoutes();
+	getLogger().log("Rute incarcate: " + std::to_string(_routes.size()));
+
+	linkStopsWithStations();
+
 	std::vector<int> ids = TrainFactory::GetAllTrainIds();
 
 	for (int id : ids) {
@@ -26,6 +33,39 @@ void RailBookApp::initialize(const std::string& dbConnection_string)
 
 }
 
+
+void RailBookApp::loadStationsFromDB() {
+	auto& db = DatabaseManager::getInstance();
+	// Folosim numele corecte de coloane conform imaginii image_913.png
+	auto result = db.executeQuery("SELECT station_id, station_name, station_city, station_county FROM Station");
+
+	int count = 0;
+	while (result.next()) {
+		_allStations.push_back(new Station(
+			result.get<int>(0),           // station_id
+			result.get<std::string>(1),    // station_name
+			result.get<std::string>(2),    // station_city
+			result.get<std::string>(3)     // station_county
+		));
+		count++;
+	}
+	std::cout << "[DEBUG] Am incarcat " << count << " statii din baza de date." << std::endl;
+}
+void RailBookApp::linkStopsWithStations() {
+	for (auto* route : _routes) {
+		for (auto* stop : route->getStops()) {
+			int idCautat = stop->getStationId();
+
+			for (auto* s : _allStations) {
+				// Forțăm compararea directă
+				if (s->getId() == idCautat) {
+					stop->setStation(s);
+					break;
+				}
+			}
+		}
+	}
+}
 DatabaseManager& RailBookApp::getDatabaseManager()
 {
 	auto& dbManager = DatabaseManager::getInstance();
@@ -106,16 +146,34 @@ void RailBookApp::displayTrains() const
 		// Aici se apeleaza automat displayInfo() din ATrain prin polimorfism
 		train->displayInfo();
 
-		// Putem adauga si conversiile de tip string pe care le aveai deja in RailBookApp
-		std::cout << "Tip: " << trainTypeToString(train->getType())
-			<< " | Status: " << trainStatusToString(train->getStatus()) << std::endl;
+		std::cout << "   -> Detalii: " << train->getWagons().size() << " vagoane." << std::endl;
 	}
 
 	std::cout << "========================================\n" << std::endl;
 }
 
+void RailBookApp::displayRoutes() const {
+	std::cout << "\n========== LISTA RUTE DISPONIBILE ==========" << std::endl;
+	if (_routes.empty()) {
+		std::cout << "Nu exista rute incarcate." << std::endl;
+		return;
+	}
+
+	for (const auto* route : _routes) {
+		route->displayRoute(); 
+		std::cout << "--------------------------------------------" << std::endl;
+	}
+}
+
 std::vector<Route*> RailBookApp::getRoutes() const
 {
 	return _routes;
+}
+
+Route* RailBookApp::getRouteById(int routeId) const {
+	for (auto* r : _routes) {
+		if (r->getId() == routeId) return r;
+	}
+	return nullptr;
 }
 

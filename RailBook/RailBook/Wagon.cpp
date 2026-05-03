@@ -4,6 +4,7 @@ Wagon::Wagon(int id, int number, int capacity, WagonType type, int train_id)
 {
 	_id = id;	
 	_capacity = capacity;
+	_number = number;	
 	_type = type;
 	_train_id = train_id;	
 }

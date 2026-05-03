@@ -10,6 +10,11 @@ int Station::getId() const
 	return _id;
 }
 
+std::string Station::getName() const
+{
+	return _name;
+}
+
 std::string Station::getCity() const
 {
 	return _city;

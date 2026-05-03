@@ -4,20 +4,12 @@
 #include "Migration.h"
 
 int main() {
-    std::cout << ">>> PROGRAMUL A PORNIT CU SUCCES <<<" << std::endl;
+	std::cout << "Pornirea aplicatiei RailBook..." << std::endl;
 
-    // Testam daca codul ajunge aici
-    std::string test;
-    std::cout << "Apasa ENTER pentru a incerca conectarea...";
-    std::getline(std::cin, test);
     try {
         // Adaugă MultipleActiveResultSets=True; la finalul string-ului
-        std::string conn_str =
-            "DRIVER={ODBC Driver 18 for SQL Server};" // Am pus 18
-            "SERVER=DESKTOP-INU1UOQ\\SQLEXPRESS;"
-            "DATABASE=RailBook;"
-            "Trusted_Connection=yes;"
-            "TrustServerCertificate=yes;";
+        std::string conn_str = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-INU1UOQ\\SQLEXPRESS;DATABASE=RailBook;Trusted_Connection=yes;MultipleActiveResultSets=True;MultipleActiveResultSets = True;";
+        RailBookApp::getInstance().initialize(conn_str);
 
         auto& app = RailBookApp::getInstance();
         app.initialize(conn_str);
@@ -34,7 +26,8 @@ int main() {
         //std::cout << "Migrarea s-a incheiat cu succes!" << std::endl;
 
 
-        RailBookApp::getInstance().displayTrains();
+        //app.displayTrains();
+		app.displayRoutes();
 
     }
     catch (const nanodbc::database_error& e) {

@@ -151,6 +151,7 @@
     <ClCompile Include="RailBookApp.cpp" />
     <ClCompile Include="Regio.cpp" />
     <ClCompile Include="Route.cpp" />
+    <ClCompile Include="RouteFactory.cpp" />
     <ClCompile Include="Seat.cpp" />
     <ClCompile Include="SecurityUtils.cpp" />
     <ClCompile Include="Station.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="RailBookApp.h" />
     <ClInclude Include="Regio.h" />
     <ClInclude Include="Route.h" />
+    <ClInclude Include="RouteFactory.h" />
     <ClInclude Include="Seat.h" />
     <ClInclude Include="SecurityUtils.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

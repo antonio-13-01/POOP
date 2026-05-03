@@ -17,6 +17,11 @@ public:
 	int getId() const;
 	std::string getName() const;
 	std::vector<StopInfo*> getStops() const;
+
+	void addStop(StopInfo* stop);
+
+	void displayRoute() const;
+
 	//add stops to the route
 };
 

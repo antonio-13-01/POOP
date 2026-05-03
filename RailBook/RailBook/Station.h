@@ -15,6 +15,7 @@ public:
 	
 	
 	int getId() const;
+	std::string getName() const;
 	std::string getCity() const;
 	std::string getCounty() const;
 };
