@@ -50,3 +50,8 @@ std::vector<Wagon*> ATrain::getWagons() const
 {
 	return _wagons;
 }
+
+void ATrain::addWagon(Wagon* wagon)
+{
+	_wagons.push_back(wagon);
+}

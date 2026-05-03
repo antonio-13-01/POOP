@@ -7,6 +7,11 @@ Admin::Admin(int id, const std::string& last_name, const std::string& name, cons
 	:AUser(id, last_name, name, email, parolaHash, userType, isBlocked)   
 { }
 
+int Admin::getIdAdmin() const
+{
+    return _id;
+}
+
 int Admin::verifyClient(Client& client) const
 {
     if (client.getId() <= 0)
@@ -52,6 +57,9 @@ int Admin::alimentareCredit(Client& client) const
         sold+=100;
     }
     client.setCredit(sold);
+
+	return sold;
+
 }
 
 void Admin::blocareClient(Client& client) const

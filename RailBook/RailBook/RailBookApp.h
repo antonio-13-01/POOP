@@ -7,6 +7,7 @@
 #include "ITrain.h"
 #include "Route.h"
 #include "IUser.h"
+#include "TrainFactory.h"
 class RailBookApp
 {
 private:
@@ -17,14 +18,28 @@ private:
 public:
 	static RailBookApp& getInstance();
 
+	void initialize(const std::string& dbConnection_string);
 	DatabaseManager& getDatabaseManager();
-	Logger& getLogger();
-	std::vector<ITrain*> getTrains() const;
+	Logger& getLogger();	
+	
 	std::vector<Route*> getRoutes() const;
 
+	//Metode pentru trenuri
+	std::vector<ITrain*> getTrains() const;
+	std::string trainTypeToString(ITrain::TrainType type) const;
+	std::string trainStatusToString(ITrain::TrainStatus status) const;	
+	std::string wagonTypeToString(Wagon::WagonType type) const;
+	void displayTrains() const;
 private:
 	RailBookApp() = default;
-	~RailBookApp() = default;
+	~RailBookApp()
+	{
+		for (ITrain* train : _trains) {
+			delete train;
+
+			_trains.clear();
+		}
+	}
 	RailBookApp(const RailBookApp&) = delete;
 	RailBookApp& operator=(const RailBookApp&) = delete;	
 };

@@ -28,5 +28,6 @@ public:
 
 	//add wagons to the train
 
+	void addWagon(Wagon* wagon) override;
 };
 
