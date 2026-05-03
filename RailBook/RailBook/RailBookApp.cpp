@@ -132,23 +132,24 @@ std::string RailBookApp::wagonTypeToString(Wagon::WagonType type) const
 
 void RailBookApp::displayTrains() const
 {
-	auto trains = RailBookApp::getInstance().getTrains();
+	std::cout << "DEBUG: In displayTrains(), dimensiune vector: " << _trains.size() << std::endl;
+	if (_trains.empty()) {
+		std::cout << "\n[INFO] Nu exista trenuri incarcate in sistem." << std::endl;
+		return;
+	}
 
-	std::cout << "========================================" << std::endl;
-	std::cout << "TRENURI DISPONIBILE IN SISTEM:" << std::endl;
+	std::cout << "\n========================================" << std::endl;
+	std::cout << "      SISTEM RAILBOOK - TRENURI" << std::endl;
 	std::cout << "========================================" << std::endl;
 
-	for (const auto* train : trains) {
-		std::cout << "ID: " << train->getId()
-			<< " | Nr: " << train->getNumber()
-			<< " | Tip: " << trainTypeToString(train->getType())
-			<< " | Status: " << trainStatusToString(train->getStatus())
-			<< " | Vagoane: " << train->getNumberOfWagons()
-			<< std::endl;
+	for (const auto* train : _trains) {
+		// Aici se apeleaza automat displayInfo() din ATrain prin polimorfism
+		train->displayInfo();
 
 		std::cout << "   -> Detalii: " << train->getWagons().size() << " vagoane." << std::endl;
 	}
-	std::cout << "========================================" << std::endl;
+
+	std::cout << "========================================\n" << std::endl;
 }
 
 void RailBookApp::displayRoutes() const {

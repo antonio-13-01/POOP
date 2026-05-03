@@ -49,9 +49,8 @@ private:
 	{
 		for (ITrain* train : _trains) {
 			delete train;
-
-			_trains.clear();
 		}
+		_trains.clear();
 	}
 	RailBookApp(const RailBookApp&) = delete;
 	RailBookApp& operator=(const RailBookApp&) = delete;	

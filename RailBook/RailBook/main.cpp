@@ -12,7 +12,11 @@ int main() {
         RailBookApp::getInstance().initialize(conn_str);
 
         auto& app = RailBookApp::getInstance();
-        std::cout << "DEBUG: Numar trenuri in memorie: " << app.getTrains().size() << std::endl;
+        app.initialize(conn_str);
+
+       
+        app.displayTrains();
+        
 
 		//Fiindca am avut parolele in clar, am decis sa le migrez catre bcrypt
 		//Nu mai trebuie sa rulez aceasta migratie, am facut-o o singura data, dar am lasat-o aici pentru referinta
@@ -26,8 +30,15 @@ int main() {
 		app.displayRoutes();
 
     }
-    catch (const std::exception& e) {
-		std::cout << "Eroare: " << e.what() << std::endl;
+    catch (const nanodbc::database_error& e) {
+        std::cerr << "EROARE NANODBC: " << e.what() << std::endl;
     }
+    catch (const std::exception& e) {
+        std::cerr << "EROARE STANDARD: " << e.what() << std::endl;
+    }
+    catch (...) {
+        std::cerr << "EROARE NECUNOSCUTA!" << std::endl;
+    }
+
     return 0;
 }
