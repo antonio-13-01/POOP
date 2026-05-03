@@ -32,3 +32,13 @@ int Wagon::getTrainId() const
 {
 	return _train_id;
 }
+
+void Wagon::addSeat(Seat* seat) {
+	_seats.push_back(seat);
+}
+
+Wagon::~Wagon() {
+	for (Seat* seat : _seats) {
+		delete seat;
+	}
+}
