@@ -170,6 +170,16 @@ ADD discount_id       INT       NULL
 ALTER TABLE Users
 ADD CONSTRAINT FK_UsersDiscount FOREIGN KEY (discount_id) REFERENCES Discount(discount_id);
 
+ALTER TABLE Users
+ADD identity_card_number VARCHAR(50) NULL;
+
+ALTER TABLE Users
+ADD CONSTRAINT CHK_DiscountDetails 
+CHECK (
+    (client_category = 'Adult Standard' AND valability_date IS NULL AND identity_card_number IS NULL) OR
+    (client_category IN ('Elev', 'Student', 'Pensionar') AND valability_date IS NOT NULL AND identity_card_number IS NOT NULL)
+);
+
 -- ==================TICKET===================
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Ticket' AND xtype='U')

@@ -136,3 +136,5 @@ INSERT INTO Station (station_name, station_city, station_county) VALUES
 
 SELECT station_id, station_name, station_city, station_county
 FROM Station
+
+SELECT * FROM Station WHERE station_id = 1;

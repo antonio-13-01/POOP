@@ -24,6 +24,12 @@
     <ClCompile Include="Pensioner.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="Pupil.cpp" />
+    <ClCompile Include="bcrypt.cpp" />
+    <ClCompile Include="SecurityUtils.cpp" />
+    <ClCompile Include="blowfish.cpp" />
+    <ClCompile Include="TrainFactory.cpp" />
+    <ClCompile Include="Seat.cpp" />
+    <ClCompile Include="RouteFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
@@ -48,5 +54,13 @@
     <ClInclude Include="Pensioner.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="Pupil.h" />
+    <ClInclude Include="bcrypt.h" />
+    <ClInclude Include="SecurityUtils.h" />
+    <ClInclude Include="Migration.h" />
+    <ClInclude Include="node_blf.h" />
+    <ClInclude Include="openbsd.h" />
+    <ClInclude Include="TrainFactory.h" />
+    <ClInclude Include="Seat.h" />
+    <ClInclude Include="RouteFactory.h" />
   </ItemGroup>
 </Project>

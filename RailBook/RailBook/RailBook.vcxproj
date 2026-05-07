@@ -134,6 +134,8 @@
     <ClCompile Include="Adult.cpp" />
     <ClCompile Include="ATrain.cpp" />
     <ClCompile Include="AUser.cpp" />
+    <ClCompile Include="bcrypt.cpp" />
+    <ClCompile Include="blowfish.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="InterCity.cpp" />
@@ -149,9 +151,13 @@
     <ClCompile Include="RailBookApp.cpp" />
     <ClCompile Include="Regio.cpp" />
     <ClCompile Include="Route.cpp" />
+    <ClCompile Include="RouteFactory.cpp" />
+    <ClCompile Include="Seat.cpp" />
+    <ClCompile Include="SecurityUtils.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="StopInfo.cpp" />
     <ClCompile Include="Student.cpp" />
+    <ClCompile Include="TrainFactory.cpp" />
     <ClCompile Include="Wagon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +165,7 @@
     <ClInclude Include="Adult.h" />
     <ClInclude Include="ATrain.h" />
     <ClInclude Include="AUser.h" />
+    <ClInclude Include="bcrypt.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="InterCity.h" />
@@ -166,6 +173,9 @@
     <ClInclude Include="ITrain.h" />
     <ClInclude Include="IUser.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="Migration.h" />
+    <ClInclude Include="node_blf.h" />
+    <ClInclude Include="openbsd.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="nanodbc.h" />
     <ClInclude Include="Pensioner.h" />
@@ -173,9 +183,15 @@
     <ClInclude Include="RailBookApp.h" />
     <ClInclude Include="Regio.h" />
     <ClInclude Include="Route.h" />
+    <ClInclude Include="RouteFactory.h" />
+    <ClInclude Include="Seat.h" />
+    <ClInclude Include="SecurityUtils.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Station.h" />
     <ClInclude Include="StopInfo.h" />
     <ClInclude Include="Student.h" />
+    <ClInclude Include="TrainFactory.h" />
     <ClInclude Include="Wagon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

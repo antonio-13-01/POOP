@@ -11,6 +11,7 @@ public:
 
     enum class TrainStatus { Activ, Anulat };
 
+	//Getters
 	virtual int getId() const = 0;
 	virtual std::string getNumber() const = 0;
 	virtual int getRouteId() const = 0;
@@ -19,6 +20,11 @@ public:
 	virtual int getNumberOfWagons() const = 0;
 	virtual float getFarePerKm() const = 0;
 	virtual std::vector<Wagon*> getWagons() const = 0;
+
+	virtual void addWagon(Wagon* wagon) = 0;
+	virtual void displayInfo() const = 0;
+
+	virtual ~ITrain() = default;	
 	
 };
 

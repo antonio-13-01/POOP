@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+class Station; 
+
 class StopInfo
 {
 private:
@@ -10,6 +12,7 @@ private:
 	int _station_id;
 	int _arrival_minutes;
 	int _departure_minutes;
+	Station* _station;
 
 public:
 	StopInfo(int id, int route_id, int station_id, int arrival_minutes, int departure_minutes);
@@ -20,5 +23,9 @@ public:
 	int getStationId() const;
 	int getArrivalMinutes() const;
 	int getDepartureMinutes() const;
+	Station* getStation() const { return _station; }
+	void setStation(Station* station) { _station = station; }	
+
+	void displayStop() const ;
 };
 
