@@ -26,7 +26,10 @@ public:
 	float getFarePerKm() const override;
 	std::vector<Wagon*> getWagons() const override;
 
+
+	void displayInfo() const override;
 	//add wagons to the train
 
+	void addWagon(Wagon* wagon) override;
 };
 
