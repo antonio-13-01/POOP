@@ -5,3 +5,9 @@ Pensioner::Pensioner(int id, const std::string last_name, const std::string name
 	UserType userType, float credit, std::string valability, bool isBlocked)
 	: Client(id, last_name, name, email, parolaHash, userType, credit, valability, isBlocked)
 {}
+
+void Pensioner::displayUser() const
+{
+		AUser::displayUser();
+		std::cout << " | Tip: PENSIONAR | Credit: " << _credit << " RON | Valabilitate: " << _valability << std::endl;
+}

@@ -6,3 +6,7 @@ Student::Student(int id, const std::string last_name,
 	:Client(id, last_name, name, email, parolaHash, userType, credit, valability, isBlocked)
 {
 }
+void Student::displayUser() const {
+	AUser::displayUser();
+	std::cout << " | Tip: STUDENT | Credit: " << _credit << " RON | Valabilitate: " << _valability << std::endl;
+}

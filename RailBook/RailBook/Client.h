@@ -7,7 +7,7 @@ public:
 	enum class ClientType
 	{ Adult, Pensionar, Student, Elev };
 	
-private:
+protected:
 	float _credit;
 	std::string _valability;
 	ClientType _type;

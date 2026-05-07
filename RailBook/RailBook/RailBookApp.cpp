@@ -28,8 +28,15 @@ void RailBookApp::initialize(const std::string& dbConnection_string)
 			getLogger().log("Eroare la incarcarea trenului cu ID: " + std::to_string(id));
 		}
 	}
+	std::vector<int> userIds = UserFactory::GetAllUserIds();
+	for (int id : userIds) {
+		auto* user = UserFactory::LoadUserFromDB(id);
+		if (user) {
+			_users.push_back(user);
+		}
+	}
 
-	getLogger().log("Aplicatia a fost initializata. Trenuri incarcate: " + std::to_string(_trains.size()));
+	getLogger().log("Aplicatia a fost initializata.");
 
 }
 
@@ -49,7 +56,7 @@ void RailBookApp::loadStationsFromDB() {
 		));
 		count++;
 	}
-	std::cout << "[DEBUG] Am incarcat " << count << " statii din baza de date." << std::endl;
+	
 }
 void RailBookApp::linkStopsWithStations() {
 	for (auto* route : _routes) {
@@ -130,17 +137,45 @@ std::string RailBookApp::wagonTypeToString(Wagon::WagonType type) const
 	}
 }
 
+bool RailBookApp::userSignUp(const std::string& lastName, const std::string& firstName,
+	const std::string& email, const std::string& password,
+	const std::string& role, const std::string& category,
+	const std::string& valability, const std::string& ic_number)
+{
+	int success = UserFactory::signUp(lastName, firstName, email, password, role, category, valability, ic_number);
+
+	if (success != -1) {
+		IUser* newUser = UserFactory::LoadUserFromDB(success);
+		_users.push_back(newUser);
+		Logger::getInstance().log("Utilizator nou inregistrat: " + email); 
+			return true;
+	}
+	return false;
+}
+
+bool RailBookApp::userLogin(const std::string& email, const std::string& password) {
+
+	if (UserFactory::login(email, password)) {
+		
+		IUser* user = SessionManager::getInstance().getCurrentUser();
+		Logger::getInstance().log("Login reusit pentru: " + user->getEmail());
+			return true;
+	}
+	return false;
+}
+
+void RailBookApp::userLogout()
+{
+}
+
 void RailBookApp::displayTrains() const
 {
-	std::cout << "DEBUG: In displayTrains(), dimensiune vector: " << _trains.size() << std::endl;
 	if (_trains.empty()) {
 		std::cout << "\n[INFO] Nu exista trenuri incarcate in sistem." << std::endl;
 		return;
 	}
 
-	std::cout << "\n========================================" << std::endl;
-	std::cout << "      SISTEM RAILBOOK - TRENURI" << std::endl;
-	std::cout << "========================================" << std::endl;
+	std::cout << "=============== LISTA TRENURI ===============" << std::endl;
 
 	for (const auto* train : _trains) {
 		// Aici se apeleaza automat displayInfo() din ATrain prin polimorfism
@@ -165,6 +200,20 @@ void RailBookApp::displayRoutes() const {
 	}
 }
 
+void RailBookApp::displayUsers() const {
+	
+	std::cout << "=========LISTA UTILIZATORI============" << std::endl;
+
+	if (_users.empty()) {
+		std::cout << "[INFO] Nu există utilizatori în baza de date." << std::endl;
+	}
+	else {
+		for (const auto* user : _users) {
+			user->displayUser();
+		}
+	}
+	std::cout << "==========================================\n" << std::endl;
+}
 std::vector<Route*> RailBookApp::getRoutes() const
 {
 	return _routes;

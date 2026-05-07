@@ -21,5 +21,6 @@ public:
     void deblocareClient(Client client) const;
     void modificareTipClient(Client client, Client::ClientType newType) const;
 
+	void displayUser() const override;  
 };
 
