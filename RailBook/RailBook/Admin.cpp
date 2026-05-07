@@ -3,16 +3,14 @@
 #include <string>
 
 
-Admin::Admin(int id, const std::string& last_name, const std::string& name, const std::string& email, const std::string& parolaHash, UserType userType, bool isBlocked)
+Admin::Admin(int id, const std::string last_name, 
+    const std::string name, const std::string email,
+    const std::string parolaHash, UserType userType,
+    bool isBlocked)
 	:AUser(id, last_name, name, email, parolaHash, userType, isBlocked)   
 { }
 
-int Admin::getIdAdmin() const
-{
-    return _id;
-}
-
-int Admin::verifyClient(Client& client) const
+int Admin::verifyClient(Client client) const
 {
     if (client.getId() <= 0)
         return 0;
@@ -50,7 +48,7 @@ int Admin::verifyClient(Client& client) const
     return 1;
 }
 
-int Admin::alimentareCredit(Client& client) const
+int Admin::alimentareCredit(Client client) const
 {
     float sold = client.getCredit();
     if (sold <= 50) {
@@ -62,7 +60,7 @@ int Admin::alimentareCredit(Client& client) const
 
 }
 
-void Admin::blocareClient(Client& client) const
+void Admin::blocareClient(Client client) const
 {
     if (client.isBlocked())
         Logger::getInstance().log("clientul este deja blocat\n");
@@ -70,7 +68,7 @@ void Admin::blocareClient(Client& client) const
     Logger::getInstance().log("clientul " + client.getName() + " a fost blocat\n");
 }
 
-void Admin::deblocareClient(Client& client) const
+void Admin::deblocareClient(Client client) const
 {
     if (!client.isBlocked())
         Logger::getInstance().log("clientul nu este blocat\n");
@@ -78,7 +76,7 @@ void Admin::deblocareClient(Client& client) const
     Logger::getInstance().log("clientul " + client.getName() + " a fost deblocat\n");
 }
 
-void Admin::modificareTipClient(Client& client, Client::ClientType newType) const
+void Admin::modificareTipClient(Client client, Client::ClientType newType) const
 {
     client.setClientType(newType);
 }
