@@ -7,3 +7,9 @@ Operator::Operator(int id, const std::string last_name,
 	:AUser(id, last_name, name, email, parolaHash, userType,isBlocked)
 {
 }
+
+void Operator::displayUser() const
+{
+	AUser::displayUser();
+	std::cout << " | Acces: Full System Control" << std::endl;
+}

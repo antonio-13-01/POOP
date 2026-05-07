@@ -12,23 +12,29 @@ int main() {
         RailBookApp::getInstance().initialize(conn_str);
 
         auto& app = RailBookApp::getInstance();
-        app.initialize(conn_str);
-
-       
-        app.displayTrains();
         
 
 		//Fiindca am avut parolele in clar, am decis sa le migrez catre bcrypt
 		//Nu mai trebuie sa rulez aceasta migratie, am facut-o o singura data, dar am lasat-o aici pentru referinta
         //
-        //std::cout << "Se incepe migrarea parolelor..." << std::endl;
         //MigratePasswords();
         //std::cout << "Migrarea s-a incheiat cu succes!" << std::endl;
 
 
         //app.displayTrains();
-		app.displayRoutes();
+		//app.displayRoutes();
 
+       // app.displayUsers();
+
+        /*if (app.userSignUp("Nacu", "Ana", "ana@test.ro", "parola123", "Client", "Student", "2024-12-31", "123456789")) {
+            std::cout << "Inregistrare reusita!" << std::endl;
+        }*/
+
+        //app.displayUsers();
+
+        if (app.userLogin("ana@test.ro", "parola123")) {
+            std::cout << "Login reusit! Sesiune pornita prin SessionManager." << std::endl;
+        }
     }
     catch (const nanodbc::database_error& e) {
         std::cerr << "EROARE NANODBC: " << e.what() << std::endl;

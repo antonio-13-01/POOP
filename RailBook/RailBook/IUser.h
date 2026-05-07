@@ -14,5 +14,9 @@ public:
 	virtual UserType getUserType() const = 0;
 	virtual bool isBlocked() const = 0;
 	virtual void setBlocked(bool blocked) = 0;
+	virtual void displayUser() const = 0;
+
+
+	virtual ~IUser() = default;
 };
 

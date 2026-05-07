@@ -6,3 +6,8 @@ Adult::Adult(int id, const std::string last_name,
 	: Client(id, last_name, name, email, parolaHash, userType, credit, valability, isBlocked)
 {
 }
+
+void Adult::displayUser() const {
+	AUser::displayUser();
+	std::cout << " | Tip: ADULT | Credit: " << _credit << " RON" << std::endl;
+}

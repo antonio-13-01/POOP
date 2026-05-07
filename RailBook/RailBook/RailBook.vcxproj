@@ -154,10 +154,12 @@
     <ClCompile Include="RouteFactory.cpp" />
     <ClCompile Include="Seat.cpp" />
     <ClCompile Include="SecurityUtils.cpp" />
+    <ClCompile Include="SessionManager.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="StopInfo.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="TrainFactory.cpp" />
+    <ClCompile Include="UserFactory.cpp" />
     <ClCompile Include="Wagon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,10 +190,12 @@
     <ClInclude Include="SecurityUtils.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="SessionManager.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="StopInfo.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="TrainFactory.h" />
+    <ClInclude Include="UserFactory.h" />
     <ClInclude Include="Wagon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -9,5 +9,7 @@ public:
 		const std::string email, const std::string parolaHash,
 		UserType userType, float credit, std::string valability,
 		bool isBlocked);
+
+	void displayUser() const override;
 };
 

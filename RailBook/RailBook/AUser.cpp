@@ -47,3 +47,12 @@ void AUser::setBlocked(bool blocked)
 	_isBlocked = blocked;
 }
 
+void AUser::displayUser() const
+{
+	std::cout << "[" << (_userType == UserType::Admin ? "ADMIN" :
+		_userType == UserType::Operator ? "OPERATOR" : "CLIENT") << "] "
+		<< "ID: " << _id << " | " << _last_name << " " << _name
+		<< " | Email: " << _email;
+	if (_isBlocked) std::cout << " [BLOCAT]";
+}
+

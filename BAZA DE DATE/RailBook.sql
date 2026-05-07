@@ -179,6 +179,8 @@ CHECK (
     (client_category = 'Adult Standard' AND valability_date IS NULL AND identity_card_number IS NULL) OR
     (client_category IN ('Elev', 'Student', 'Pensionar') AND valability_date IS NOT NULL AND identity_card_number IS NOT NULL)
 );
+ALTER TABLE Users
+ADD is_blocked BIT NOT NULL DEFAULT 0;
 
 -- ==================TICKET===================
 

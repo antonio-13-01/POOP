@@ -25,5 +25,6 @@ public:
 	UserType getUserType() const override;
 	bool isBlocked() const override;
 	void setBlocked(bool blocked) override;
+	void displayUser() const override;
 };
 
