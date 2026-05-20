@@ -171,6 +171,7 @@
     <ClInclude Include="bcrypt.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="DatabaseManager.h" />
+    <ClInclude Include="Exceptions.h" />
     <ClInclude Include="InterCity.h" />
     <ClInclude Include="InterRegio.h" />
     <ClInclude Include="ITrain.h" />

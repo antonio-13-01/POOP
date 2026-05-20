@@ -12,10 +12,12 @@ public:
         UserType userType, bool isBlocked);
 
     int verifyClient(const Client& client) const;
-    int alimentareCredit(Client client) const;
+    void alimentareCredit(Client client) const;
     void blocareClient(Client client) const;
     void deblocareClient(Client client) const;
     void modificareTipClient(Client client, Client::ClientType newType) const;
     void afisareJurnal() const;
     void displayUser() const override;
+    
 };
+

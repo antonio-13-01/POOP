@@ -38,7 +38,7 @@ int Admin::verifyClient(const Client& client) const
     return 1;
 }
 
-int Admin::alimentareCredit(Client client) const
+void Admin::alimentareCredit(Client client) const
 {
     float sold = client.getCredit();
     if (sold <= 100) {

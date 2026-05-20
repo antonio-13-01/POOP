@@ -26,7 +26,25 @@ void Route::addStop(StopInfo* stop)
 {
 	_stops.push_back(stop);
 }
+int Route::getTravelDuration(int startStationId, int endStationId) {
+    auto stops = getStops();
+    int timeStart = -1;
+    int timeEnd = -1;
 
+    for (auto* stop : stops) {
+        if (stop->getStationId() == startStationId) {
+            timeStart = stop->getDepartureMinutes(); // Plecarea din stația A
+        }
+        if (stop->getStationId() == endStationId) {
+            timeEnd = stop->getArrivalMinutes();     // Sosirea în stația B
+        }
+    }
+
+    if (timeStart != -1 && timeEnd != -1 && timeEnd > timeStart) {
+        return (timeEnd - timeStart);
+    }
+    return 0;
+}
 void Route::displayRoute() const {
     std::cout << "Ruta: " << _name << " (ID: " << _id << ")" << std::endl;
     const std::vector<StopInfo*>& stops = getStops();
