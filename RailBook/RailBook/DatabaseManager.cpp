@@ -47,3 +47,13 @@ nanodbc::result DatabaseManager::executeQuery(const std::string& sql)
 	}   
     return nanodbc::execute(conn, sql);
 }
+
+nanodbc::transaction DatabaseManager::beginTransaction()
+{
+    if (!conn.connected()) {
+        throw std::runtime_error("Nu ești conectat la baza de date pentru a iniția o tranzacție!");
+    }
+    // Returnăm obiectul de tranzacție. 
+    // Acesta va da automat BEGIN TRAN în baza de date.
+    return nanodbc::transaction(conn);
+}

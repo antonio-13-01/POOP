@@ -20,6 +20,8 @@ public:
 
 	void addStop(StopInfo* stop);
 
+	int getTravelDuration(int startStationId, int endStationId);
+
 	void displayRoute() const;
 
 	//add stops to the route

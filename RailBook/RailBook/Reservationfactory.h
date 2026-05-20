@@ -3,6 +3,7 @@
 #include <vector>
 #include "DatabaseManager.h"
 #include "Client.h"
+#include "Exceptions.h"
 
 struct ReservationResult {
     bool success;
@@ -24,7 +25,7 @@ struct TicketInfo {
 class ReservationFactory {
 public:
 
-    static ReservationResult bookSeat(
+    static int bookSeat(
         int users_id,
         int seat_id,
         int begin_stop_info_id,
@@ -38,11 +39,11 @@ public:
     static int cancelTrainAndRefundAll(int train_id, float compensatie_extra);
     static bool isSeatAvailable(int seat_id, const std::string& journey_date);
     static float calculateFinalFare(float base_fare, Client::ClientType clientType);
-
+    static float getUserCredit(int users_id);
     static std::vector<TicketInfo> getUserTickets(int users_id);
 
 private:
-    static float getUserCredit(int users_id);
+    
     static bool updateUserCredit(int users_id, float new_credit, nanodbc::connection& conn);
     static int insertTicket(int users_id, int seat_id,
         int begin_stop_info_id, int end_stop_info_id,

@@ -68,3 +68,100 @@ Login reusit pentru: ana@test.ro
 Rute incarcate: 158
 Aplicatia a fost initializata.
 Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[EROARE] Adaugare tren esuata: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:2457: 42000: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'fare_per_km'.  [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The batch could not be analyzed because of compile errors. 
+Rute incarcate: 158
+Rute incarcate: 158
+Rute incarcate: 158
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[EROARE] Adaugare tren esuata: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:2457: 42000: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'fare_per_km'.  [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The batch could not be analyzed because of compile errors. 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] ROLLBACK exceptie: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:3988: 24000: [Microsoft][ODBC Driver 17 for SQL Server]Invalid cursor state 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] ROLLBACK exceptie: null access
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] ROLLBACK exceptie: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:3988: 24000: [Microsoft][ODBC Driver 17 for SQL Server]Invalid cursor state 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] ROLLBACK exceptie: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:3988: 24000: [Microsoft][ODBC Driver 17 for SQL Server]Invalid cursor state 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] Bilet 5 creat pentru user 244 | Loc 15 | Pret: 50.000000 RON
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] Loc 15 indisponibil.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] Loc 15 indisponibil.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] Loc 15 indisponibil.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[ANULARE] Bilet 5 anulat. Credit restituit: 50.000000 RON -> user 244
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Login reusit pentru: ana@test.ro
+[REZERVARE] Bilet 6 creat pentru user 244 | Loc 16 | Pret: 50.000000 RON
+[ANULARE] Bilet 6 anulat. Credit restituit: 50.000000 RON -> user 244

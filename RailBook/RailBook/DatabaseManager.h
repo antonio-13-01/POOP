@@ -19,6 +19,9 @@ public:
 	// Metoda pentru a executa interogări de tip SELECT și a returna rezultatele
 	nanodbc::result executeQuery(const std::string& sql);
 
+	//Metoda pentru a începe o tranzacție
+	nanodbc::transaction beginTransaction();
+
 private:
 	nanodbc::connection conn;
 

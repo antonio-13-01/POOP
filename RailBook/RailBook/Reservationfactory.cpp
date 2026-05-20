@@ -79,10 +79,12 @@ int ReservationFactory::insertTicket(int users_id, int seat_id,
 {
     nanodbc::statement stmt(conn);
     nanodbc::prepare(stmt,
+        "SET NOCOUNT ON; "
         "INSERT INTO Ticket (users_id, seat_id, begin_stop_info_id, end_stop_info_id, "
         "                    fare, ticket_status, journey_date) "
-        "VALUES (?, ?, ?, ?, ?, 'Activ', ?) ; "
-        "SELECT SCOPE_IDENTITY();");
+        "VALUES (?, ?, ?, ?, ?, 'Activ', ?); "
+        "SELECT CAST(SCOPE_IDENTITY() AS INT);"
+    );
 
     stmt.bind(0, &users_id);
     stmt.bind(1, &seat_id);
@@ -98,7 +100,7 @@ int ReservationFactory::insertTicket(int users_id, int seat_id,
     return -1;
 }
 
-ReservationResult ReservationFactory::bookSeat(
+int ReservationFactory::bookSeat(
     int users_id,
     int seat_id,
     int begin_stop_info_id,
@@ -107,42 +109,31 @@ ReservationResult ReservationFactory::bookSeat(
     const std::string& journey_date,
     Client::ClientType clientType)
 {
-    ReservationResult res;
-    res.success = false;
-    res.ticket_id = -1;
-    res.fare_paid = 0.0f;
-
-    //verifica disponibilitatea locului
+    // 1. Verifică disponibilitatea locului
     if (!isSeatAvailable(seat_id, journey_date)) {
-        res.message = "Locul nu este disponibil pentru data selectata.";
-        Logger::getInstance().log("[REZERVARE] Loc " + std::to_string(seat_id) +
-            " indisponibil pentru " + journey_date);
-        return res;
+        Logger::getInstance().log("[REZERVARE] Loc " + std::to_string(seat_id) + " indisponibil.");
+        throw SeatTakenException("Locul selectat nu mai este disponibil pentru aceasta data.");
     }
 
-    //calculeaza pretul final cu reducere
+    // 2. Calculează prețul final cu reducere
     float final_fare = calculateFinalFare(base_fare, clientType);
-    res.fare_paid = final_fare;
 
-    //verifica creditul utilizatorului
+    // 3. Verifică creditul utilizatorului
     float credit = 0.0f;
     try {
         credit = getUserCredit(users_id);
     }
     catch (const std::exception& e) {
-        res.message = e.what();
-        return res;
+        throw DatabaseTransactionException(e.what());
     }
 
     if (credit < final_fare) {
-        res.message = "Credit insuficient. Necesar: " + std::to_string(final_fare) +
-            " RON, disponibil: " + std::to_string(credit) + " RON.";
-        Logger::getInstance().log("[REZERVARE] Credit insuficient pentru user " +
-            std::to_string(users_id));
-        return res;
+        Logger::getInstance().log("[REZERVARE] Credit insuficient pentru user " + std::to_string(users_id));
+        throw InsufficientFundsException("Credit insuficient. Necesar: " + std::to_string(final_fare) +
+            " RON, disponibil: " + std::to_string(credit) + " RON.");
     }
 
-    //scade creditul + insereaza biletul
+    // 4. Scade creditul + inserează biletul
     auto& conn = DatabaseManager::getInstance().getConnection();
 
     try {
@@ -151,8 +142,7 @@ ReservationResult ReservationFactory::bookSeat(
         float new_credit = credit - final_fare;
         if (!updateUserCredit(users_id, new_credit, conn)) {
             nanodbc::just_execute(conn, "ROLLBACK");
-            res.message = "Eroare la actualizarea creditului.";
-            return res;
+            throw DatabaseTransactionException("Eroare la actualizarea creditului.");
         }
 
         int ticket_id = insertTicket(users_id, seat_id,
@@ -161,33 +151,28 @@ ReservationResult ReservationFactory::bookSeat(
 
         if (ticket_id == -1) {
             nanodbc::just_execute(conn, "ROLLBACK");
-            res.message = "Eroare la inserarea biletului. Tranzactie anulata.";
-            Logger::getInstance().log("[REZERVARE] ROLLBACK — inserare bilet esuata pentru user " +
-                std::to_string(users_id));
-            return res;
+            Logger::getInstance().log("[REZERVARE] ROLLBACK — inserare bilet esuata pentru user " + std::to_string(users_id));
+            throw DatabaseTransactionException("Eroare la inserarea biletului. Tranzactie anulata.");
         }
 
         nanodbc::just_execute(conn, "COMMIT");
 
-        res.success = true;
-        res.ticket_id = ticket_id;
-        res.message = "Rezervare reusita! Bilet ID: " + std::to_string(ticket_id) +
-            " | Pret platit: " + std::to_string(final_fare) + " RON";
-
+        // SUCCES! Logăm și returnăm ID-ul direct.
         Logger::getInstance().log("[REZERVARE] Bilet " + std::to_string(ticket_id) +
             " creat pentru user " + std::to_string(users_id) +
             " | Loc " + std::to_string(seat_id) +
             " | Pret: " + std::to_string(final_fare) + " RON");
 
+        return ticket_id; 
     }
     catch (const std::exception& e) {
         try { nanodbc::just_execute(conn, "ROLLBACK"); }
-        catch (...) {}
-        res.message = std::string("Eroare tranzactie: ") + e.what();
+        catch (...) {} // Asigură-te că faci rollback!
         Logger::getInstance().log("[REZERVARE] ROLLBACK exceptie: " + std::string(e.what()));
-    }
 
-    return res;
+        // Aruncăm excepția mai departe, ca interfața (sau funcția apelantă) să știe că a picat baza de date
+        throw DatabaseTransactionException(std::string("Eroare tranzactie: ") + e.what());
+    }
 }
 
 //anulare bilet
