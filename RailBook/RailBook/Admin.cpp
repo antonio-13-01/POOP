@@ -47,7 +47,7 @@ int Admin::alimentareCredit(Client client) const
         Logger::getInstance().log("[ADMIN] Credit alimentat pentru " +
             client.getName() + " | Nou sold: " + std::to_string(sold) + " RON");
     }
-    return static_cast<int>(sold);
+    client.setCredit(sold);
 }
 
 void Admin::blocareClient(Client client) const
