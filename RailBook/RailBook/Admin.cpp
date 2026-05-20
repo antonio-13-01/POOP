@@ -55,9 +55,6 @@ int Admin::alimentareCredit(Client client) const
         sold+=100;
     }
     client.setCredit(sold);
-
-	return sold;
-
 }
 
 void Admin::blocareClient(Client client) const
