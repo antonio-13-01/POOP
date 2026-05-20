@@ -32,6 +32,7 @@
     <ClCompile Include="RouteFactory.cpp" />
     <ClCompile Include="UserFactory.cpp" />
     <ClCompile Include="SessionManager.cpp" />
+    <ClCompile Include="Reservationfactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
@@ -66,5 +67,6 @@
     <ClInclude Include="RouteFactory.h" />
     <ClInclude Include="UserFactory.h" />
     <ClInclude Include="SessionManager.h" />
+    <ClInclude Include="Reservationfactory.h" />
   </ItemGroup>
 </Project>

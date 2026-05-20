@@ -16,7 +16,7 @@ public:
 		const std::string name, const std::string email,
 		const std::string parolaHash, UserType userType,
 		bool _isBlocked);
-	
+
 	int getId() const override;
 	std::string getLastName() const override;
 	std::string getName() const override;
@@ -26,5 +26,7 @@ public:
 	bool isBlocked() const override;
 	void setBlocked(bool blocked) override;
 	void displayUser() const override;
+	void setLastName(const std::string lastName) override;
+	void setName(const std::string name) override;
+	void setPassword(const std::string password) override;
 };
-
