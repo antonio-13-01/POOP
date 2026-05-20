@@ -150,6 +150,7 @@
     <ClCompile Include="Pupil.cpp" />
     <ClCompile Include="RailBookApp.cpp" />
     <ClCompile Include="Regio.cpp" />
+    <ClCompile Include="Reservationfactory.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="RouteFactory.cpp" />
     <ClCompile Include="Seat.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Pupil.h" />
     <ClInclude Include="RailBookApp.h" />
     <ClInclude Include="Regio.h" />
+    <ClInclude Include="Reservationfactory.h" />
     <ClInclude Include="Route.h" />
     <ClInclude Include="RouteFactory.h" />
     <ClInclude Include="Seat.h" />

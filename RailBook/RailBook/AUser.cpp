@@ -47,6 +47,16 @@ void AUser::setBlocked(bool blocked)
 	_isBlocked = blocked;
 }
 
+void AUser::setLastName(const std::string lastName) { 
+	_last_name = lastName; 
+}
+void AUser::setName(const std::string name) { 
+	_name = name; 
+}
+void AUser::setPassword(const std::string password) {
+	_password = password;
+}
+
 void AUser::displayUser() const
 {
 	std::cout << "[" << (_userType == UserType::Admin ? "ADMIN" :

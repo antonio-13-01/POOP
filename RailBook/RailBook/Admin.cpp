@@ -1,32 +1,25 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Admin.h"
 #include <string>
+#include <fstream>
+#include <iostream>
 
-
-Admin::Admin(int id, const std::string last_name, 
+Admin::Admin(int id, const std::string last_name,
     const std::string name, const std::string email,
     const std::string parolaHash, UserType userType,
     bool isBlocked)
-	:AUser(id, last_name, name, email, parolaHash, userType, isBlocked)   
-{ }
+    : AUser(id, last_name, name, email, parolaHash, userType, isBlocked)
+{}
 
-int Admin::verifyClient(Client client) const
+int Admin::verifyClient(const Client& client) const
 {
-    if (client.getId() <= 0)
-        return 0;
-
-    if (client.getLastName().empty() || client.getName().empty())
-        return 0;
-
-    if (client.getEmail().find('@') == std::string::npos)
-        return 0;
-
-    if (client.getCredit() < 0)
-        return 0;
+    if (client.getId() <= 0) return 0;
+    if (client.getLastName().empty() || client.getName().empty()) return 0;
+    if (client.getEmail().find('@') == std::string::npos) return 0;
+    if (client.getCredit() < 0) return 0;
 
     std::string val = client.getValability();
-    if (val.length() < 10)
-        return 0;
+    if (val.length() < 10) return 0;
 
     int an = std::stoi(val.substr(0, 4));
     int luna = std::stoi(val.substr(5, 2));
@@ -38,12 +31,9 @@ int Admin::verifyClient(Client client) const
     int lunaCurenta = acum->tm_mon + 1;
     int ziCurenta = acum->tm_mday;
 
-    if (an < anCurent)
-        return 0;
-    if (an == anCurent && luna < lunaCurenta)
-        return 0;
-    if (an == anCurent && luna == lunaCurenta && zi < ziCurenta)
-        return 0;
+    if (an < anCurent) return 0;
+    if (an == anCurent && luna < lunaCurenta) return 0;
+    if (an == anCurent && luna == lunaCurenta && zi < ziCurenta) return 0;
 
     return 1;
 }
@@ -51,31 +41,72 @@ int Admin::verifyClient(Client client) const
 int Admin::alimentareCredit(Client client) const
 {
     float sold = client.getCredit();
-    if (sold <= 50) {
-        sold+=100;
+    if (sold <= 100) {
+        sold += 100;
+        client.setCredit(sold);
+        Logger::getInstance().log("[ADMIN] Credit alimentat pentru " +
+            client.getName() + " | Nou sold: " + std::to_string(sold) + " RON");
     }
     client.setCredit(sold);
 }
 
 void Admin::blocareClient(Client client) const
 {
-    if (client.isBlocked())
-        Logger::getInstance().log("clientul este deja blocat\n");
+    if (client.isBlocked()) {
+        Logger::getInstance().log("[ADMIN] Clientul " + client.getName() +
+            " este deja blocat.");
+        return;
+    }
     client.setBlocked(true);
-    Logger::getInstance().log("clientul " + client.getName() + " a fost blocat\n");
+    Logger::getInstance().log("[ADMIN] Clientul " + client.getName() + " a fost blocat.");
 }
 
 void Admin::deblocareClient(Client client) const
 {
-    if (!client.isBlocked())
-        Logger::getInstance().log("clientul nu este blocat\n");
+    if (!client.isBlocked()) {
+        Logger::getInstance().log("[ADMIN] Clientul " + client.getName() +
+            " nu este blocat.");
+        return;
+    }
     client.setBlocked(false);
-    Logger::getInstance().log("clientul " + client.getName() + " a fost deblocat\n");
+    Logger::getInstance().log("[ADMIN] Clientul " + client.getName() + " a fost deblocat.");
 }
 
 void Admin::modificareTipClient(Client client, Client::ClientType newType) const
 {
     client.setClientType(newType);
+    Logger::getInstance().log("[ADMIN] Tip client modificat pentru " + client.getName());
+}
+
+void Admin::afisareJurnal() const
+{
+    std::ifstream logFile("RailBookLog");
+
+    if (!logFile.is_open()) {
+        std::cout << "[INFO] Jurnalul de activitate este gol sau nu exista." << std::endl;
+        return;
+    }
+
+    std::cout << "==========================================" << std::endl;
+    std::cout << "         JURNAL DE ACTIVITATE             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+
+    std::string line;
+    int lineCount = 0;
+    while (std::getline(logFile, line)) {
+        std::cout << line << std::endl;
+        lineCount++;
+    }
+
+    if (lineCount == 0) {
+        std::cout << "[INFO] Jurnalul este gol." << std::endl;
+    }
+
+    std::cout << "==========================================" << std::endl;
+    std::cout << "  Total intrari: " << lineCount << std::endl;
+    std::cout << "==========================================" << std::endl;
+
+    logFile.close();
 }
 
 void Admin::displayUser() const {

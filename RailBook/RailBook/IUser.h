@@ -16,6 +16,9 @@ public:
 	virtual void setBlocked(bool blocked) = 0;
 	virtual void displayUser() const = 0;
 
+	virtual void setLastName(const std::string lastName) = 0;
+	virtual void setName(const std::string name) = 0;
+	virtual void setPassword(const std::string password) = 0;
 
 	virtual ~IUser() = default;
 };
