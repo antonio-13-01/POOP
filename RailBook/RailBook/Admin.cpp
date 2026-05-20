@@ -78,3 +78,7 @@ void Admin::modificareTipClient(Client client, Client::ClientType newType) const
     client.setClientType(newType);
 }
 
+void Admin::displayUser() const {
+    AUser::displayUser();
+    std::cout << " | Acces: Full System Control" << std::endl;
+}
