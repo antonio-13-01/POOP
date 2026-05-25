@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Admin.h"
+#include "SecurityUtils.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -40,6 +41,12 @@ int Admin::verifyClient(const Client& client) const
 
 void Admin::alimentareCredit(Client client) const
 {
+    if (verifyClient(client) == 0) {
+        Logger::getInstance().log("[ADMIN] Client invalid, alimentare refuzata pentru: " +
+            client.getName());
+        return;
+    }
+
     float sold = client.getCredit();
     if (sold <= 100) {
         sold += 100;
@@ -47,11 +54,16 @@ void Admin::alimentareCredit(Client client) const
         Logger::getInstance().log("[ADMIN] Credit alimentat pentru " +
             client.getName() + " | Nou sold: " + std::to_string(sold) + " RON");
     }
-    client.setCredit(sold);
 }
 
 void Admin::blocareClient(Client client) const
 {
+    if (verifyClient(client) == 0) {
+        Logger::getInstance().log("[ADMIN] Client invalid, blocare refuzata pentru: " +
+            client.getName());
+        return;
+    }
+
     if (client.isBlocked()) {
         Logger::getInstance().log("[ADMIN] Clientul " + client.getName() +
             " este deja blocat.");
@@ -63,6 +75,12 @@ void Admin::blocareClient(Client client) const
 
 void Admin::deblocareClient(Client client) const
 {
+    if (verifyClient(client) == 0) {
+        Logger::getInstance().log("[ADMIN] Client invalid, deblocare refuzata pentru: " +
+            client.getName());
+        return;
+    }
+
     if (!client.isBlocked()) {
         Logger::getInstance().log("[ADMIN] Clientul " + client.getName() +
             " nu este blocat.");
@@ -74,8 +92,45 @@ void Admin::deblocareClient(Client client) const
 
 void Admin::modificareTipClient(Client client, Client::ClientType newType) const
 {
+    if (verifyClient(client) == 0) {
+        Logger::getInstance().log("[ADMIN] Client invalid, modificare tip refuzata pentru: " +
+            client.getName());
+        return;
+    }
+
     client.setClientType(newType);
     Logger::getInstance().log("[ADMIN] Tip client modificat pentru " + client.getName());
+}
+
+bool Admin::resetParola(int user_id, const std::string& newPassword) const
+{
+    if (newPassword.empty()) {
+        Logger::getInstance().log("[ADMIN] Resetare parola refuzata — parola goala pentru user ID: " +
+            std::to_string(user_id));
+        return false;
+    }
+
+    try {
+		//aici facem hash la parola noua cu bcrypt
+        std::string newHash = SecurityUtils::HashPassword(newPassword);
+
+        auto& db = DatabaseManager::getInstance();
+        nanodbc::statement stmt(db.getConnection());
+        nanodbc::prepare(stmt,
+            "UPDATE dbo.Users SET users_password = ? WHERE users_id = ?");
+
+        stmt.bind(0, newHash.c_str());
+        stmt.bind(1, &user_id);
+        nanodbc::execute(stmt);
+
+        Logger::getInstance().log("[ADMIN] Parola resetata pentru user ID: " +
+            std::to_string(user_id));
+        return true;
+    }
+    catch (const std::exception& e) {
+        Logger::getInstance().log("[ADMIN] Eroare resetare parola: " + std::string(e.what()));
+        return false;
+    }
 }
 
 void Admin::afisareJurnal() const
@@ -96,12 +151,10 @@ void Admin::afisareJurnal() const
         lineCount++;
     }
 
-    if (lineCount == 0) {
+    if (lineCount == 0)
         std::cout << "[INFO] Jurnalul este gol." << std::endl;
-    }
 
     std::cout << "  Total intrari: " << lineCount << std::endl;
-
     logFile.close();
 }
 

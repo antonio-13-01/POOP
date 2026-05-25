@@ -33,6 +33,7 @@
     <ClCompile Include="UserFactory.cpp" />
     <ClCompile Include="SessionManager.cpp" />
     <ClCompile Include="Reservationfactory.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
@@ -69,5 +70,6 @@
     <ClInclude Include="SessionManager.h" />
     <ClInclude Include="Reservationfactory.h" />
     <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="Server.h" />
   </ItemGroup>
 </Project>

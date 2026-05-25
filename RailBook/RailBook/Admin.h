@@ -2,6 +2,8 @@
 #include "AUser.h"
 #include "Client.h"
 #include "Logger.h"
+#include "DatabaseManager.h"
+#include "nanodbc.h"
 
 class Admin : public AUser
 {
@@ -16,8 +18,7 @@ public:
     void blocareClient(Client client) const;
     void deblocareClient(Client client) const;
     void modificareTipClient(Client client, Client::ClientType newType) const;
+    bool resetParola(int user_id, const std::string& newPassword) const;
     void afisareJurnal() const;
     void displayUser() const override;
-    
 };
-
