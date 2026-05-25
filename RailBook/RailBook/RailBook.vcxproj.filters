@@ -71,5 +71,6 @@
     <ClInclude Include="Reservationfactory.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="Statisticsmodule.h" />
   </ItemGroup>
 </Project>

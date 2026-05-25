@@ -165,3 +165,64 @@ Aplicatia a fost initializata.
 Login reusit pentru: ana@test.ro
 [REZERVARE] Bilet 6 creat pentru user 244 | Loc 16 | Pret: 50.000000 RON
 [ANULARE] Bilet 6 anulat. Credit restituit: 50.000000 RON -> user 244
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Utilizator nou inregistrat: test_1779744405@railbook.ro
+Utilizator nou inregistrat: student_1779744405@railbook.ro
+Utilizator nou inregistrat: tester_main_1779744406@railbook.ro
+Login reusit pentru: tester_main_1779744406@railbook.ro
+[REZERVARE] Bilet 7 creat pentru user 261 | Loc 0 | Pret: 50.000000 RON
+[REZERVARE] Loc 0 indisponibil.
+[ANULARE] Bilet 7 anulat. Restituire: 100% (50.000000 RON) -> user 261 | Ore pana la plecare: 9239
+[ANULARE] Bilet 7 nu e activ sau nu apartine userului 261
+[REZERVARE] Bilet 8 creat pentru user 261 | Loc 0 | Pret: 30.000000 RON
+[REZERVARE] Conflict orar detectat pentru user 261 pe data 2027-08-20
+[ANULARE] Bilet 8 anulat. Restituire: 100% (30.000000 RON) -> user 261 | Ore pana la plecare: 10823
+[ADMIN] Clientul Main (ID: 261) a fost blocat.
+[ADMIN] Clientul Main (ID: 261) a fost deblocat.
+[ADMIN] Eroare modificare tip client: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:2071: 01000: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint "CHK_DiscountDetails". The conflict occurred in database "RailBook", table "dbo.Users".  [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Utilizator nou inregistrat: test_1779745110@railbook.ro
+Utilizator nou inregistrat: student_1779745110@railbook.ro
+Utilizator nou inregistrat: tester_main_1779745110@railbook.ro
+Login reusit pentru: tester_main_1779745110@railbook.ro
+[REZERVARE] Bilet 9 creat pentru user 265 | Loc 0 | Pret: 50.000000 RON
+[REZERVARE] Loc 0 indisponibil.
+[ANULARE] Bilet 9 anulat. Restituire: 100% (50.000000 RON) -> user 265 | Ore pana la plecare: 9239
+[ANULARE] Bilet 9 nu e activ sau nu apartine userului 265
+[REZERVARE] Bilet 10 creat pentru user 265 | Loc 0 | Pret: 30.000000 RON
+[REZERVARE] Conflict orar detectat pentru user 265 pe data 2027-08-20
+[ANULARE] Bilet 10 anulat. Restituire: 100% (30.000000 RON) -> user 265 | Ore pana la plecare: 10823
+[ADMIN] Clientul Main (ID: 265) a fost blocat.
+[ADMIN] Clientul Main (ID: 265) a fost deblocat.
+[ADMIN] Eroare modificare tip client: C:\Users\USER\Desktop\POOP\RailBook\RailBook\nanodbc.cpp:2071: 01000: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The UPDATE statement conflicted with the CHECK constraint "CHK_DiscountDetails". The conflict occurred in database "RailBook", table "dbo.Users".  [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated. 
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Utilizator nou inregistrat: test_1779745222@railbook.ro
+Utilizator nou inregistrat: student_1779745222@railbook.ro
+Utilizator nou inregistrat: tester_main_1779745222@railbook.ro
+Login reusit pentru: tester_main_1779745222@railbook.ro
+[REZERVARE] Bilet 11 creat pentru user 269 | Loc 0 | Pret: 50.000000 RON
+[REZERVARE] Loc 0 indisponibil.
+[ANULARE] Bilet 11 anulat. Restituire: 100% (50.000000 RON) -> user 269 | Ore pana la plecare: 9239
+[ANULARE] Bilet 11 nu e activ sau nu apartine userului 269
+[REZERVARE] Bilet 12 creat pentru user 269 | Loc 0 | Pret: 30.000000 RON
+[REZERVARE] Conflict orar detectat pentru user 269 pe data 2027-08-20
+[ANULARE] Bilet 12 anulat. Restituire: 100% (30.000000 RON) -> user 269 | Ore pana la plecare: 10823
+[ANULARE TREN] Test notificare | [NOTIF:269]
+[REZERVARE] Bilet 13 creat pentru user 269 | Loc 0 | Pret: 40.000000 RON
+[ANULARE TREN] Bilet 0 anulat | User 244 | Restituit: 25.000000 RON | [NOTIF:244]
+[ANULARE TREN] Bilet 13 anulat | User 269 | Restituit: 50.000000 RON | [NOTIF:269]
+[ANULARE TREN] Tren 0 anulat. Total bilete afectate: 2
+Utilizator deconectat.

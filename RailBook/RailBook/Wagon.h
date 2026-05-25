@@ -23,7 +23,7 @@ public:
 	int getCapacity() const;
 	WagonType getType() const;
 	int getTrainId() const;
-
+	std::vector<Seat*> getSeats() const;
 	void addSeat(Seat* seat);
 
 	~Wagon();

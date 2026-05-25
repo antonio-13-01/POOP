@@ -197,6 +197,7 @@
     <ClInclude Include="Server.h" />
     <ClInclude Include="SessionManager.h" />
     <ClInclude Include="Station.h" />
+    <ClInclude Include="Statisticsmodule.h" />
     <ClInclude Include="StopInfo.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="TrainFactory.h" />

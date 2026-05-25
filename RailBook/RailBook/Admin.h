@@ -13,12 +13,14 @@ public:
         const std::string parolaHash,
         UserType userType, bool isBlocked);
 
+
     int verifyClient(const Client& client) const;
-    void alimentareCredit(Client client) const;
-    void blocareClient(Client client) const;
-    void deblocareClient(Client client) const;
-    void modificareTipClient(Client client, Client::ClientType newType) const;
+    void alimentareCredit(int userId, float amount) const;
+    void blocareClient(int userId) const;
+    void deblocareClient(int userId) const;
+    void modificareTipClient(int userId, Client::ClientType newType, const std::string& newValability = "", const std::string& newIc = "") const;
     bool resetParola(int user_id, const std::string& newPassword) const;
     void afisareJurnal() const;
+
     void displayUser() const override;
 };
