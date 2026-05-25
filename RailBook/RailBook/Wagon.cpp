@@ -34,6 +34,11 @@ int Wagon::getTrainId() const
 	return _train_id;
 }
 
+std::vector<Seat*> Wagon::getSeats() const
+{
+	return _seats;
+}
+
 void Wagon::addSeat(Seat* seat) {
 	_seats.push_back(seat);
 }
