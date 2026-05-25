@@ -2,13 +2,12 @@
 #include <string>
 #include "UserFactory.h"
 
-
 IUser::UserType UserFactory::stringToUserType(const std::string& roleStr) {
     if (roleStr == "Admin") return IUser::UserType::Admin;
     if (roleStr == "Operator") return IUser::UserType::Operator;
-
     return IUser::UserType::Client;
 }
+
 int UserFactory::signUp(const std::string& lastName, const std::string& firstName,
     const std::string& email, const std::string& password,
     const std::string& role, const std::string& category,
@@ -53,12 +52,13 @@ int UserFactory::signUp(const std::string& lastName, const std::string& firstNam
     }
     return -1;
 }
+
 IUser* UserFactory::LoadUserFromDB(int id) {
     auto& db = DatabaseManager::getInstance();
     nanodbc::statement stmt(db.getConnection());
 
     nanodbc::prepare(stmt, "SELECT users_last_name, users_first_name, users_email, users_password, "
-        "users_role, client_category, client_credit, valability_date, is_blocked " // Index 8
+        "users_role, client_category, client_credit, valability_date, is_blocked "
         "FROM dbo.Users WHERE users_id = ?");
 
     stmt.bind(0, &id);
@@ -70,7 +70,6 @@ IUser* UserFactory::LoadUserFromDB(int id) {
         std::string email = result.get<std::string>(2);
         std::string password = result.get<std::string>(3);
         std::string role = result.get<std::string>(4);
-
         bool isBlocked = result.get<int>(8) != 0;
 
         if (role == "Admin") {
@@ -96,35 +95,54 @@ IUser* UserFactory::LoadUserFromDB(int id) {
     }
     return nullptr;
 }
-bool UserFactory::login(const std::string& email, const std::string& password) {
+
+bool UserFactory::login(const std::string& email, const std::string& password,
+    const std::string& ic_number)
+{
     auto& db = DatabaseManager::getInstance();
     nanodbc::statement stmt(db.getConnection());
 
-    nanodbc::prepare(stmt, "SELECT users_id, users_password FROM dbo.Users WHERE users_email = ?");
+    nanodbc::prepare(stmt,
+        "SELECT users_id, users_password, client_category, identity_card_number "
+        "FROM dbo.Users WHERE users_email = ?");
     stmt.bind(0, email.c_str());
     auto result = nanodbc::execute(stmt);
 
     if (result.next()) {
         int id = result.get<int>(0);
         std::string storedHash = result.get<std::string>(1);
+        std::string category = result.is_null(2) ? "Adult" : result.get<std::string>(2);
+        std::string storedIC = result.is_null(3) ? "" : result.get<std::string>(3);
 
-		// Verificare parola folosind bcrypt
-        if (SecurityUtils::VerifyPassword(password, storedHash)) {
-            IUser* user = LoadUserFromDB(id);
+        //verificare pass cu bcrypt
+        if (!SecurityUtils::VerifyPassword(password, storedHash)) {
+            return false;
+        }
 
-            // Verificare stare cont 
-            if (user->isBlocked()) {
-                std::cout << "[BLOCAT] Contul dvs. a fost suspendat." << std::endl;
-                delete user;
+        //verificare id legitimatie pt stud si elev
+        if (category == "Student" || category == "Pupil") {
+            if (ic_number.empty() || ic_number != storedIC) {
+                std::cout << "[EROARE] ID legitimatie incorect pentru cont "
+                    << category << "." << std::endl;
                 return false;
             }
-
-            SessionManager::getInstance().login(user);
-            return true;
         }
+
+        IUser* user = LoadUserFromDB(id);
+        if (!user) return false;
+
+        if (user->isBlocked()) {
+            std::cout << "[BLOCAT] Contul dvs. a fost suspendat." << std::endl;
+            delete user;
+            return false;
+        }
+
+        SessionManager::getInstance().login(user);
+        return true;
     }
     return false;
 }
+
 std::vector<int> UserFactory::GetAllUserIds() {
     auto& db = DatabaseManager::getInstance();
     auto result = db.executeQuery("SELECT users_id FROM dbo.Users");
