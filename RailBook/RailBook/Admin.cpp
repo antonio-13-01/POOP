@@ -87,9 +87,7 @@ void Admin::afisareJurnal() const
         return;
     }
 
-    std::cout << "==========================================" << std::endl;
     std::cout << "         JURNAL DE ACTIVITATE             " << std::endl;
-    std::cout << "==========================================" << std::endl;
 
     std::string line;
     int lineCount = 0;
@@ -102,9 +100,7 @@ void Admin::afisareJurnal() const
         std::cout << "[INFO] Jurnalul este gol." << std::endl;
     }
 
-    std::cout << "==========================================" << std::endl;
     std::cout << "  Total intrari: " << lineCount << std::endl;
-    std::cout << "==========================================" << std::endl;
 
     logFile.close();
 }

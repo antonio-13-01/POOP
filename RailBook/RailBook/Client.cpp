@@ -247,11 +247,8 @@ void Client::afisareNotificari() const
 
 	if (notificari.empty()) return;
 
-	std::cout << "==========================================" << std::endl;
 	std::cout << "  *** NOTIFICARI NOI ***                  " << std::endl;
-	std::cout << "==========================================" << std::endl;
 	for (const auto& n : notificari) {
 		std::cout << "  >> " << n << std::endl;
 	}
-	std::cout << "==========================================" << std::endl;
 }

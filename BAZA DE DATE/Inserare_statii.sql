@@ -138,3 +138,22 @@ SELECT station_id, station_name, station_city, station_county
 FROM Station
 
 SELECT * FROM Station WHERE station_id = 1;
+
+
+UPDATE Users 
+SET client_credit = 500.0 
+WHERE users_email = 'ana@test.ro';
+
+SELECT * FROM Ticket WHERE ticket_status = 'Activ';
+
+SELECT 
+    f.name AS ForeignKey,
+    OBJECT_NAME(f.parent_object_id) AS TableName,
+    COL_NAME(fc.parent_object_id, fc.parent_column_id) AS ColumnName,
+    OBJECT_NAME(f.referenced_object_id) AS ReferencedTable
+FROM sys.foreign_keys AS f
+INNER JOIN sys.foreign_key_columns AS fc ON f.object_id = fc.constraint_object_id;
+
+UPDATE Train 
+SET train_status = 'Anulat' 
+WHERE train_status = 'Inactiv';

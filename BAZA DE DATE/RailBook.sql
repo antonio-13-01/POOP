@@ -211,6 +211,11 @@ ADD CONSTRAINT FK_TicketBeginStopInfo FOREIGN KEY (begin_stop_info_id) REFERENCE
 ALTER TABLE Ticket
 ADD CONSTRAINT FK_TicketEndStopInfo FOREIGN KEY (end_stop_info_id) REFERENCES StopInfo(stop_info_id)
 
+ALTER TABLE Ticket ADD wagon_id INT;
+
+ALTER TABLE Ticket 
+ADD CONSTRAINT FK_Ticket_Wagon FOREIGN KEY (wagon_id) REFERENCES Wagon(wagon_id);
+
 -- ==================TRAIN_PRICING===================
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='TrainPricing' AND xtype='U')
 CREATE TABLE TrainPricing (

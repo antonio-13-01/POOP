@@ -10,15 +10,15 @@
 float ReservationFactory::calculateFinalFare(float base_fare, Client::ClientType clientType)
 {
     switch (clientType) {
-    case Client::ClientType::Student:
-        return base_fare * 0.50f;
     case Client::ClientType::Elev:
-        return base_fare * 0.50f;
+        return 0.0f;             // -100%
+    case Client::ClientType::Student:
+        return base_fare * 0.50f; // -50%
     case Client::ClientType::Pensionar:
-        return base_fare * 0.67f;
+        return base_fare * 0.70f; // -30% 
     case Client::ClientType::Adult:
     default:
-        return base_fare;
+        return base_fare;         // 0% reducere
     }
 }
 

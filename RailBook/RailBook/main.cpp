@@ -20,9 +20,7 @@ int main() {
         if (app.userLogin("ana@test.ro", "parola123")) {
             std::cout << "Login reusit! Utilizatorul a fost conectat." << std::endl;
 
-            // =========================================================================
             // TEST 1: REZERVARE BILET
-            // =========================================================================
             std::cout << "\n--- TEST 1: Rezervare Bilet ---" << std::endl;
 
             int testSeatId = 16;        // Locul 16 (ca sa nu ne lovim de vechiul loc 15)
@@ -50,9 +48,7 @@ int main() {
                 std::cout << ">> [EROARE - DB TRANZACTIE] " << e.what() << std::endl;
             }
 
-            // =========================================================================
             // TEST 2: ANULARE BILET
-            // =========================================================================
             std::cout << "\n--- TEST 2: Anulare Bilet ---" << std::endl;
 
             // Daca testul 1 a reusit, anulam fix biletul creat. Daca nu, incercam un ID oarecare (ex: 5)
