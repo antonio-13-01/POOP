@@ -226,3 +226,25 @@ Login reusit pentru: tester_main_1779745222@railbook.ro
 [ANULARE TREN] Bilet 13 anulat | User 269 | Restituit: 50.000000 RON | [NOTIF:269]
 [ANULARE TREN] Tren 0 anulat. Total bilete afectate: 2
 Utilizator deconectat.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Utilizator nou inregistrat: test_1779772468@railbook.ro
+Utilizator nou inregistrat: student_1779772468@railbook.ro
+Utilizator nou inregistrat: tester_main_1779772468@railbook.ro
+Login reusit pentru: tester_main_1779772468@railbook.ro
+[REZERVARE] Bilet 14 creat pentru user 273 | Loc 780 | Pret: 50.000000 RON
+[REZERVARE] Loc 780 indisponibil.
+[ANULARE] Bilet 14 anulat. Restituire: 100% (50.000000 RON) -> user 273 | Ore pana la plecare: 9231
+[ANULARE] Bilet 14 nu e activ sau nu apartine userului 273
+[REZERVARE] Bilet 15 creat pentru user 273 | Loc 780 | Pret: 30.000000 RON
+[REZERVARE] Conflict orar detectat pentru user 273 pe data 2027-08-20
+[ANULARE] Bilet 15 anulat. Restituire: 100% (30.000000 RON) -> user 273 | Ore pana la plecare: 10815
+[ANULARE TREN] Test notificare | [NOTIF:273]
+[REZERVARE] Bilet 16 creat pentru user 273 | Loc 780 | Pret: 40.000000 RON
+[ANULARE TREN] Bilet 16 anulat | User 273 | Restituit: 50.000000 RON | [NOTIF:273]
+[ANULARE TREN] Tren 2 anulat. Total bilete afectate: 1
+Utilizator deconectat.
+Rute incarcate: 158
+Aplicatia a fost initializata.
+Rute incarcate: 158
+Aplicatia a fost initializata.
