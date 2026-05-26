@@ -9,7 +9,7 @@ int main() {
 
     try {
         std::string conn_str = "DRIVER={ODBC Driver 17 for SQL Server};"
-            "SERVER=DESKTOP-INU1UOQ\\SQLEXPRESS;"
+            "SERVER=DESKTOP-B6Q1E26\\SQLEXPRESS;"
             "DATABASE=RailBook;"
             "Trusted_Connection=yes;"
             "MultipleActiveResultSets=True;";

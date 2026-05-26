@@ -17,9 +17,15 @@
 #include "Logger.h"
 #include "StatisticsModule.h"
 
+// ============================================================
+//  Sesiuni per socket — fiecare client are propriul IUser*
+// ============================================================
 std::map<SOCKET, IUser*> activeSessions;
 std::mutex sessionMutex;
 
+// ============================================================
+//  Utilitare
+// ============================================================
 std::vector<std::string> splitPacket(const std::string& s, const std::string& delim) {
     std::vector<std::string> tokens;
     size_t pos = 0;
@@ -54,6 +60,9 @@ void clearSession(SOCKET sock) {
     activeSessions.erase(sock);
 }
 
+// ============================================================
+//  Normalizare categorie client (Qt trimite in romana/engleza)
+// ============================================================
 std::string normalizeCategory(const std::string& cat) {
     if (cat == "Adult Standard" || cat == "Adult") return "Adult";
     if (cat == "Student")                           return "Student";
@@ -69,6 +78,9 @@ Client::ClientType categoryToClientType(const std::string& category) {
     return Client::ClientType::Adult;
 }
 
+// ============================================================
+//  HANDLER PRINCIPAL — proceseaza un pachet primit
+// ============================================================
 std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookApp& app) {
     auto parts = splitPacket(packet, "###");
     if (parts.empty() || parts[0].empty()) return "ERR###PACHET_GOL";
@@ -85,12 +97,11 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
 
         std::string email = parts[1];
         std::string password = parts[2];
-        std::string ic = (parts.size() > 3) ? parts[3] : "";
 
         auto& db = DatabaseManager::getInstance();
         nanodbc::statement stmt(db.getConnection());
         nanodbc::prepare(stmt,
-            "SELECT users_id, users_password, client_category, identity_card_number, is_blocked "
+            "SELECT users_id, users_password, is_blocked "
             "FROM dbo.Users WHERE users_email = ?");
         stmt.bind(0, email.c_str());
         auto result = nanodbc::execute(stmt);
@@ -99,17 +110,12 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
 
         int id = result.get<int>(0);
         std::string hash = result.get<std::string>(1);
-        std::string cat = result.is_null(2) ? "Adult" : result.get<std::string>(2);
-        std::string storedIC = result.is_null(3) ? "" : result.get<std::string>(3);
-        bool blocked = result.get<int>(4) != 0;
+        bool blocked = result.get<int>(2) != 0;
 
         if (!SecurityUtils::VerifyPassword(password, hash))
             return "ERR_LOGIN###Email sau parola incorecta";
 
         if (blocked) return "ERR_LOGIN###Contul este blocat";
-
-        if ((cat == "Student" || cat == "Pupil") && ic != storedIC)
-            return "ERR_LOGIN###ID legitimatie incorect";
 
         IUser* user = UserFactory::LoadUserFromDB(id);
         if (!user) return "ERR_LOGIN###Eroare incarcare utilizator";
@@ -216,7 +222,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
             };
 
         for (auto& path : paths) {
-            if (path.size() != 1) continue;
+            if (path.size() != 1) continue; // doar directe deocamdata
             ITrain* t = path[0];
             Route* route = app.getRouteById(t->getRouteId());
             if (!route) continue;
@@ -229,6 +235,8 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
             if (dep == -1 || arr == -1) continue;
 
             float pret = app.calculateFare(t, startId, endId);
+
+            // Primul seat_id disponibil
             int firstSeat = -1;
             for (auto* w : t->getWagons()) {
                 firstSeat = w->getId();
@@ -564,6 +572,9 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
     return "ERR###COMANDA_NECUNOSCUTA";
 }
 
+// ============================================================
+//  CLIENT HANDLER — ruleaza intr-un thread separat
+// ============================================================
 void handleClient(SOCKET clientSock, RailBookApp& app) {
     char buffer[4096];
     std::cout << "[SERVER] Client conectat: socket " << clientSock << std::endl;
@@ -577,6 +588,7 @@ void handleClient(SOCKET clientSock, RailBookApp& app) {
         }
 
         std::string packet(buffer, bytes);
+        // Eliminam \n si \r de la sfarsit
         while (!packet.empty() && (packet.back() == '\n' || packet.back() == '\r'))
             packet.pop_back();
 
@@ -592,6 +604,9 @@ void handleClient(SOCKET clientSock, RailBookApp& app) {
     closesocket(clientSock);
 }
 
+// ============================================================
+//  BUCLA PRINCIPALA A SERVERULUI
+// ============================================================
 void runServer(RailBookApp& app, int port) {
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
@@ -602,6 +617,7 @@ void runServer(RailBookApp& app, int port) {
         return;
     }
 
+    // Permite reutilizarea portului rapid dupa restart
     int opt = 1;
     setsockopt(serverSock, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
 
@@ -621,9 +637,12 @@ void runServer(RailBookApp& app, int port) {
     std::cout << "[SERVER] RailBook Server pornit pe portul " << port << std::endl;
     std::cout << "[SERVER] Asteapta conexiuni..." << std::endl;
 
+    // Accept loop — cate un thread per client
     while (true) {
         SOCKET clientSock = accept(serverSock, nullptr, nullptr);
         if (clientSock == INVALID_SOCKET) continue;
+
+        // Lansam thread separat pentru fiecare client
         std::thread(handleClient, clientSock, std::ref(app)).detach();
     }
 
