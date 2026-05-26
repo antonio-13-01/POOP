@@ -16,9 +16,15 @@
 #include "Client.h"
 #include "Logger.h"
 
+// ============================================================
+//  Sesiuni per socket — fiecare client are propriul IUser*
+// ============================================================
 std::map<SOCKET, IUser*> activeSessions;
 std::mutex sessionMutex;
 
+// ============================================================
+//  Utilitare
+// ============================================================
 std::vector<std::string> splitPacket(const std::string& s, const std::string& delim) {
     std::vector<std::string> tokens;
     size_t pos = 0;
@@ -53,6 +59,9 @@ void clearSession(SOCKET sock) {
     activeSessions.erase(sock);
 }
 
+// ============================================================
+//  Normalizare categorie client (Qt trimite in romana/engleza)
+// ============================================================
 std::string normalizeCategory(const std::string& cat) {
     if (cat == "Adult Standard" || cat == "Adult") return "Adult";
     if (cat == "Student")                           return "Student";
@@ -68,28 +77,29 @@ Client::ClientType categoryToClientType(const std::string& category) {
     return Client::ClientType::Adult;
 }
 
+// ============================================================
+//  HANDLER PRINCIPAL — proceseaza un pachet primit
+// ============================================================
 std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookApp& app) {
     auto parts = splitPacket(packet, "###");
     if (parts.empty() || parts[0].empty()) return "ERR###PACHET_GOL";
 
     std::string cmd = parts[0];
 
-    //login
-    //client: LOGIN###email###parola  sau  LOGIN###email###parola###ic_number
-    //server: OK_LOGIN###ADMIN/OPERATOR/PASAGER###sold
-    //sau ERR_LOGIN###Motiv
+    // ── LOGIN ──────────────────────────────────────────────
+    // Client: LOGIN###email###parola
+    // Server: OK_LOGIN###ADMIN/OPERATOR/PASAGER###sold###nr_notificari
+    //      sau ERR_LOGIN###Motiv
     if (cmd == "LOGIN") {
         if (parts.size() < 3) return "ERR_LOGIN###Date incomplete";
 
         std::string email = parts[1];
         std::string password = parts[2];
-        std::string ic = (parts.size() > 3) ? parts[3] : "";
 
-        //login temporar prin userFactory
         auto& db = DatabaseManager::getInstance();
         nanodbc::statement stmt(db.getConnection());
         nanodbc::prepare(stmt,
-            "SELECT users_id, users_password, client_category, identity_card_number, is_blocked "
+            "SELECT users_id, users_password, is_blocked "
             "FROM dbo.Users WHERE users_email = ?");
         stmt.bind(0, email.c_str());
         auto result = nanodbc::execute(stmt);
@@ -98,17 +108,12 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
 
         int id = result.get<int>(0);
         std::string hash = result.get<std::string>(1);
-        std::string cat = result.is_null(2) ? "Adult" : result.get<std::string>(2);
-        std::string storedIC = result.is_null(3) ? "" : result.get<std::string>(3);
-        bool blocked = result.get<int>(4) != 0;
+        bool blocked = result.get<int>(2) != 0;
 
         if (!SecurityUtils::VerifyPassword(password, hash))
             return "ERR_LOGIN###Email sau parola incorecta";
 
         if (blocked) return "ERR_LOGIN###Contul este blocat";
-
-        if ((cat == "Student" || cat == "Pupil") && ic != storedIC)
-            return "ERR_LOGIN###ID legitimatie incorect";
 
         IUser* user = UserFactory::LoadUserFromDB(id);
         if (!user) return "ERR_LOGIN###Eroare incarcare utilizator";
@@ -123,7 +128,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         try { credit = ReservationFactory::getUserCredit(id); }
         catch (...) {}
 
-        Logger::getInstance().log("[LOGIN] User " + email + " conectat (socket " + std::to_string(clientSock) + ")");
+        Logger::getInstance().log("[LOGIN] User " + email + " conectat.");
 
         auto notif = Logger::getInstance().getLogsFor(std::to_string(id));
         std::string notifStr = notif.empty() ? "0" : std::to_string(notif.size());
@@ -131,6 +136,8 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return "OK_LOGIN###" + role + "###" + std::to_string(credit) + "###" + notifStr;
     }
 
+
+    // ── LOGOUT ────────────────────────────────────────────
     if (cmd == "LOGOUT") {
         IUser* user = getSession(clientSock);
         if (user) {
@@ -141,6 +148,8 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return "OK_LOGOUT";
     }
 
+    // ── SIGNUP / REGISTER ─────────────────────────────────
+    // Client: REGISTER###Nume###Prenume###email###parola###Categorie###IC
     if (cmd == "SIGNUP" || cmd == "REGISTER") {
         if (parts.size() < 6) return "ERR_SIGNUP###Date incomplete";
 
@@ -151,7 +160,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         std::string category = normalizeCategory(parts[5]);
         std::string ic = (parts.size() > 6 && parts[6] != "NONE") ? parts[6] : "";
 
-        //valabilitatea, momentan libera pt adult
+        // Valabilitate — goala pentru Adult, poate fi completata ulterior
         std::string valability = (parts.size() > 7) ? parts[7] : "";
 
         bool ok = app.userSignUp(lastName, firstName, email, password,
@@ -160,6 +169,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return "ERR_SIGNUP###Email deja inregistrat sau date invalide";
     }
 
+    // ── SEARCH_ROUTES / SSEARCH ───────────────────────────
     // Client: SSEARCH###Plecare###Destinatie###Data###ORA sau PRET
     // Server: TRAINS_LIST###nr|tip|HH:MM|HH:MM|pret###...
     if (cmd == "SEARCH_ROUTES" || cmd == "SSEARCH") {
@@ -169,7 +179,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         std::string destinatie = parts[2];
         std::string sortBy = (parts.size() > 4) ? parts[4] : "ORA";
 
-		//gasim id urile statiilor de plecare si dest
+        // Gasim ID statii dupa nume
         int startId = -1, endId = -1;
         for (auto* route : app.getRoutes()) {
             for (auto* stop : route->getStops()) {
@@ -189,7 +199,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
             std::string nr, tip;
             int plecareMins, sosireMins;
             float pret;
-            int seat_id; //primul loc disponibil
+            int seat_id; // primul loc disponibil
         };
         std::vector<TrenResult> rezultate;
 
@@ -200,7 +210,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
             };
 
         for (auto& path : paths) {
-            if (path.size() != 1) continue;
+            if (path.size() != 1) continue; // doar directe deocamdata
             ITrain* t = path[0];
             Route* route = app.getRouteById(t->getRouteId());
             if (!route) continue;
@@ -213,10 +223,12 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
             if (dep == -1 || arr == -1) continue;
 
             float pret = app.calculateFare(t, startId, endId);
+
+            // Primul seat_id disponibil
             int firstSeat = -1;
             for (auto* w : t->getWagons()) {
-                //locurile sunt in vagon,dam primul vagon/loc ca referinta
-                firstSeat = w->getId(); //wagon_id ca placeholder
+                // Seat-urile sunt in wagon — dam primul wagon/seat ca referinta
+                firstSeat = w->getId(); // wagon_id ca placeholder
                 break;
             }
 
@@ -224,7 +236,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
                                    dep, arr, pret, firstSeat });
         }
 
-        //sortarea
+        // Sortare
         if (sortBy == "PRET" || sortBy == "1") {
             std::sort(rezultate.begin(), rezultate.end(),
                 [](const TrenResult& a, const TrenResult& b) { return a.pret < b.pret; });
@@ -245,6 +257,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return response;
     }
 
+    // ── BUY_TICKET ────────────────────────────────────────
     // Client: BUY_TICKET###seat_id###begin_stop###end_stop###pret###data###categorie
     // Server: OK_BUY###ticket_id  sau  ERR_BUY###Motiv
     if (cmd == "BUY_TICKET") {
@@ -279,6 +292,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         }
     }
 
+    // ── CANCEL_TICKET ─────────────────────────────────────
     // Client: CANCEL_TICKET###ticket_id
     // Server: OK_CANCEL  sau  ERR_CANCEL###Motiv
     if (cmd == "CANCEL_TICKET") {
@@ -292,6 +306,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return ok ? "OK_CANCEL" : "ERR_CANCEL###Bilet invalid sau deja anulat";
     }
 
+    // ── GET_TICKETS ───────────────────────────────────────
     // Client: GET_TICKETS
     // Server: TICKETS_LIST###id|seat|begin|end|fare|status|date###...
     if (cmd == "GET_TICKETS") {
@@ -314,6 +329,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return response;
     }
 
+    // ── GET_CREDIT ────────────────────────────────────────
     if (cmd == "GET_CREDIT") {
         IUser* user = getSession(clientSock);
         if (!user) return "ERR###Nu esti autentificat";
@@ -322,6 +338,7 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
         return "OK_CREDIT###" + std::to_string(credit);
     }
 
+    // ── GET_NOTIFICATIONS ─────────────────────────────────
     if (cmd == "GET_NOTIFICATIONS") {
         IUser* user = getSession(clientSock);
         if (!user) return "ERR###Nu esti autentificat";
@@ -339,6 +356,9 @@ std::string handlePacket(const std::string& packet, SOCKET clientSock, RailBookA
     return "ERR###COMANDA_NECUNOSCUTA";
 }
 
+// ============================================================
+//  CLIENT HANDLER — ruleaza intr-un thread separat
+// ============================================================
 void handleClient(SOCKET clientSock, RailBookApp& app) {
     char buffer[4096];
     std::cout << "[SERVER] Client conectat: socket " << clientSock << std::endl;
@@ -352,6 +372,7 @@ void handleClient(SOCKET clientSock, RailBookApp& app) {
         }
 
         std::string packet(buffer, bytes);
+        // Eliminam \n si \r de la sfarsit
         while (!packet.empty() && (packet.back() == '\n' || packet.back() == '\r'))
             packet.pop_back();
 
@@ -361,13 +382,16 @@ void handleClient(SOCKET clientSock, RailBookApp& app) {
         sendMsg(clientSock, response);
     }
 
-    //cleanup sesiune la deconectare
+    // Cleanup sesiune la deconectare
     IUser* user = getSession(clientSock);
     if (user) delete user;
     clearSession(clientSock);
     closesocket(clientSock);
 }
 
+// ============================================================
+//  BUCLA PRINCIPALA A SERVERULUI
+// ============================================================
 void runServer(RailBookApp& app, int port) {
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
@@ -378,6 +402,7 @@ void runServer(RailBookApp& app, int port) {
         return;
     }
 
+    // Permite reutilizarea portului rapid dupa restart
     int opt = 1;
     setsockopt(serverSock, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
 
@@ -397,9 +422,12 @@ void runServer(RailBookApp& app, int port) {
     std::cout << "[SERVER] RailBook Server pornit pe portul " << port << std::endl;
     std::cout << "[SERVER] Asteapta conexiuni..." << std::endl;
 
+    // Accept loop — cate un thread per client
     while (true) {
         SOCKET clientSock = accept(serverSock, nullptr, nullptr);
         if (clientSock == INVALID_SOCKET) continue;
+
+        // Lansam thread separat pentru fiecare client
         std::thread(handleClient, clientSock, std::ref(app)).detach();
     }
 
