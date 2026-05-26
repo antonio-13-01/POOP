@@ -14,13 +14,17 @@ int UserFactory::signUp(const std::string& lastName, const std::string& firstNam
     const std::string& valability, const std::string& ic_number)
 {
     if (email.find('@') == std::string::npos) return -1;
+
     try {
         auto& db = DatabaseManager::getInstance();
         std::string passwordHash = SecurityUtils::HashPassword(password);
 
-        std::string sql = "INSERT INTO dbo.Users (users_last_name, users_first_name, users_email, "
+        // FIX: Adăugăm SET NOCOUNT ON; la început
+        std::string sql = "SET NOCOUNT ON; "
+            "INSERT INTO dbo.Users (users_last_name, users_first_name, users_email, "
             "users_password, users_role, client_category, valability_date, identity_card_number, is_blocked) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0); "
+            "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
         nanodbc::statement stmt(db.getConnection());
         nanodbc::prepare(stmt, sql);
@@ -30,7 +34,14 @@ int UserFactory::signUp(const std::string& lastName, const std::string& firstNam
         stmt.bind(2, email.c_str());
         stmt.bind(3, passwordHash.c_str());
         stmt.bind(4, role.c_str());
-        stmt.bind(5, category.c_str());
+
+        // Respectăm constrângerea bazei de date pentru "Adult"
+        if (category == "Adult" || category.empty()) {
+            stmt.bind_null(5);
+        }
+        else {
+            stmt.bind(5, category.c_str());
+        }
 
         if (valability.empty()) stmt.bind_null(6);
         else stmt.bind(6, valability.c_str());
@@ -38,13 +49,11 @@ int UserFactory::signUp(const std::string& lastName, const std::string& firstNam
         if (ic_number.empty()) stmt.bind_null(7);
         else stmt.bind(7, ic_number.c_str());
 
-        nanodbc::execute(stmt);
+        auto result = nanodbc::execute(stmt);
 
-        nanodbc::statement stmtId(db.getConnection());
-        nanodbc::prepare(stmtId, "SELECT CAST(SCOPE_IDENTITY() AS INT)");
-        auto result = nanodbc::execute(stmtId);
-
-        if (result.next()) return result.get<int>(0);
+        if (result.next()) {
+            return result.get<int>(0);
+        }
     }
     catch (const std::exception& e) {
         std::cerr << "Eroare SignUp: " << e.what() << std::endl;

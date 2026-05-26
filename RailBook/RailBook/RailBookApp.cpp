@@ -113,27 +113,30 @@ bool RailBookApp::deleteRoute(int route_id)
 {
 	auto& db = getDatabaseManager();
 
-	// Verificăm dacă există rezervări active
+	// FIX #7: verificam daca exista TRENURI ACTIVE pe aceasta ruta
+	// (nu tichete pe train_id care era gresit)
 	nanodbc::statement checkStmt(db.getConnection());
 	nanodbc::prepare(checkStmt,
-		"SELECT COUNT(*) FROM Ticket t "
-		"JOIN Seat s ON t.seat_id = s.seat_id "
-		"JOIN Wagon w ON s.wagon_id = w.wagon_id "
-		"WHERE w.train_id = ? AND t.ticket_status = 'Activ'");
+		"SELECT COUNT(*) FROM Train "
+		"WHERE route_id = ? AND train_status = 'Activ'");
 
 	checkStmt.bind(0, &route_id);
 	auto result = nanodbc::execute(checkStmt);
 
 	if (result.next() && result.get<int>(0) > 0) {
+		getLogger().log("[OPERATOR] EROARE: Ruta " + std::to_string(route_id) +
+			" are trenuri active. Nu poate fi stearsa.");
 		return false;
 	}
 
-	// FIX: Folosim 'Anulat' (care este permis în baza de date) în loc de 'Inactiv'
+	// Daca nu are trenuri active, marcam ruta ca inactiva
 	nanodbc::statement updateStmt(db.getConnection());
-	nanodbc::prepare(updateStmt, "UPDATE Train SET train_status = 'Anulat' WHERE train_id = ?");
+	nanodbc::prepare(updateStmt,
+		"UPDATE Train SET train_status = 'Anulat' WHERE route_id = ?");
 	updateStmt.bind(0, &route_id);
 	nanodbc::execute(updateStmt);
 
+	getLogger().log("[OPERATOR] Ruta " + std::to_string(route_id) + " dezactivata.");
 	return true;
 }
 
